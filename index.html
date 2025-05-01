@@ -127,7 +127,7 @@
           development cycle—from creating a user interface to handling back-end logic and managing databases.
           This project gave me real-world experience in building efficient, scalable web applications.<br><br>
 
-          I am currently working with PHP and Laravel to further improve my skills and gain professional experience.
+          <h2>I am currently working with PHP and Laravel </h2> to further improve my skills and gain professional experience.
           I’m always eager to learn and grow in the field of development, and I’m now looking for opportunities to apply
           my skills and contribute to a dynamic team.
         </p>
@@ -717,6 +717,7 @@
           </div>
           <div class="button-area">
             <button type="submit">
+        
               Submit <i class="fa fa-paper-plane"></i></button>
           </div>
         </form>
@@ -790,7 +791,7 @@
 
 
 
-  <!-- java code for menu btn-->
+  <!-- js code for menu btn-->
 
   <script>
     var navlinks = document.getElementById("navlinks");
@@ -803,27 +804,57 @@
     }
   </script>
 
-  <!-- java code for menu btn end-->
+  <!-- js code for menu btn end-->
 
 
   <!-- submit form script -->
-  <script>
-    window.addEventListener("load", function () {
-      const form = document.getElementById('contact-form');
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const data = new FormData(form);
-        const action = e.target.action;
-        fetch(action, {
-          method: 'POST',
-          body: data,
+ 
+
+<!-- submit form script -->
+<script>
+  window.addEventListener("load", function () {
+    const form = document.getElementById('contact-form');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity(); // Show browser validation messages
+        return;
+      }
+
+      // Disable button and show loading
+      submitBtn.disabled = true;
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = "Submitting... ⏳";
+
+      const data = new FormData(form);
+      const action = form.action;
+
+      fetch(action, {
+        method: 'POST',
+        body: data,
+      })
+        .then(() => {
+          alert("✅ Submitted! Thank you for your message.");
+          form.reset();
         })
-          .then(() => {
-            alert("Submited! 💛💛thank you for your submitting message💛💛");
-          })
-      });
+        .catch(() => {
+          alert("❌ Something went wrong. Please try again.");
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        });
     });
-  </script>
+  });
+</script>
+<!-- submit form script end -->
+
+
+
+
   <!-- submit form script end-->
 
 
