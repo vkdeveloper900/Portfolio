@@ -939,6 +939,7 @@ header .fa{
 }
 /* view all button */
 .morebtn {
+  max-width: 2rem;
   display: flex;
   justify-content: center;
 }
