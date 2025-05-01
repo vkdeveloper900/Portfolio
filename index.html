@@ -128,9 +128,11 @@
           This project gave me real-world experience in building efficient, scalable web applications.<br><br>
 
           <b>I am currently working with PHP and Laravel </b> 
+          <p>
           to further improve my skills and gain professional experience.
           I’m always eager to learn and grow in the field of development, and I’m now looking for opportunities to apply
           my skills and contribute to a dynamic team.
+          </p>  
         </p>
 
         <h2>You can contact me about creating a website, E-invitation card, or video.</h2><br>
@@ -871,34 +873,7 @@
   });
 </script>
 <!-- submit form script end -->
-<script>
-  // 1. Cache your nav links and page sections
-  const navLinks = document.querySelectorAll('ul li a');
-  const sections = document.querySelectorAll('section');
-  
-  // 2. Function to update “active” class based on scroll position
-  function setActiveLink() {
-    let index = sections.length;
-  
-    // Find the section currently at (or above) the top of viewport
-    while (--index && window.scrollY + 60 < sections[index].offsetTop) {}
-  
-    // Remove active from all links, then add to the matching one
-    navLinks.forEach(link => link.classList.remove('active'));
-    const activeLink = document.querySelector(`ul li a[href="#${sections[index].id}"]`);
-    if (activeLink) activeLink.classList.add('active');
-  }
-  
-  // 3. Listen for scroll and hashchange events
-  window.addEventListener('scroll', setActiveLink);
-  window.addEventListener('hashchange', () => {
-    // when URL hash manually changes, re-run the highlighter
-    setActiveLink();
-  });
-  
-  // 4. Initialize on page load
-  document.addEventListener('DOMContentLoaded', setActiveLink);
-  </script>
+
   
 
 
