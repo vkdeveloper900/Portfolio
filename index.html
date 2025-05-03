@@ -40,28 +40,15 @@
       <i class="fa fa-times" onclick="hideMenu()"></i>
 
       <ul>
-        <li class="nav-item">
-          <a class="active" href="#home">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="#about">About</a>
-        </li>
-        <li class="nav-item">
-          <a href="#skills">Skills</a>
-        </li>
-        <li class="nav-item">
-          <a href="#education">Education</a>
-        </li>
-        <li class="nav-item">
-          <a href="#work">Work</a>
-        </li>
-        <li class="nav-item">
-          <a href="#experience">Experience</a>
-        </li>
-        <li class="nav-item">
-          <a href="#contact">Contact</a>
-        </li>
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+        <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
+        <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
       </ul>
+      
 
     </nav>
     <i class="fa fa-bars" onclick="showMenu()"></i>
@@ -888,18 +875,41 @@
 </script>
 <!-- submit form script end -->
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-      const navLinks = document.querySelectorAll('.nav-item a');
-  
-      navLinks.forEach(link => {
-          link.addEventListener('click', function () {
-              navLinks.forEach(nav => nav.classList.remove('active'));
-              this.classList.add('active');
-          });
+document.addEventListener('DOMContentLoaded', function () {
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.nav-item a');
+
+  function activateNavLink() {
+      let scrollY = window.pageYOffset;
+
+      sections.forEach(section => {
+          const sectionTop = section.offsetTop - 100;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute('id');
+
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+              navLinks.forEach(link => {
+                  link.classList.remove('active');
+                  if (link.getAttribute('href') === `#${sectionId}`) {
+                      link.classList.add('active');
+                  }
+              });
+          }
+      });
+  }
+
+  window.addEventListener('scroll', activateNavLink);
+  activateNavLink(); // Run on load
+
+  // Optional: Also allow manual click-based highlighting
+  navLinks.forEach(link => {
+      link.addEventListener('click', function () {
+          navLinks.forEach(nav => nav.classList.remove('active'));
+          this.classList.add('active');
       });
   });
-  </script>
+});
+
   
 
   
