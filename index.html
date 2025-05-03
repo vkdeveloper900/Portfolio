@@ -40,13 +40,27 @@
       <i class="fa fa-times" onclick="hideMenu()"></i>
 
       <ul>
-        <li><a class="active" href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li class="nav-item">
+          <a class="active" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a href="#skills">Skills</a>
+        </li>
+        <li class="nav-item">
+          <a href="#education">Education</a>
+        </li>
+        <li class="nav-item">
+          <a href="#work">Work</a>
+        </li>
+        <li class="nav-item">
+          <a href="#experience">Experience</a>
+        </li>
+        <li class="nav-item">
+          <a href="#contact">Contact</a>
+        </li>
       </ul>
 
     </nav>
@@ -113,7 +127,7 @@
       </div>
       <div class="content">
         <h3>I'm Vinod</h3>
-        <span class="tag">Web Developer <br><br>Hello!</span>
+        <span class="tag">Laravel Developer <br><br>Hello!</span>
 
         <p>
           Hello, my name is Vinod Suthar.<br>
@@ -873,6 +887,20 @@
   });
 </script>
 <!-- submit form script end -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const navLinks = document.querySelectorAll('.nav-item a');
+  
+      navLinks.forEach(link => {
+          link.addEventListener('click', function () {
+              navLinks.forEach(nav => nav.classList.remove('active'));
+              this.classList.add('active');
+          });
+      });
+  });
+  </script>
+  
 
   
 
