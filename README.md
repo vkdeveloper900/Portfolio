@@ -1,6 +1,3 @@
-Here is your **final version** of the animated portfolio page, polished and ready to use or publish:
-
----
 
 # Portfolio ✨
 
@@ -14,7 +11,6 @@ Welcome to my **interactive portfolio site**! 🚀 Dive into the work I’ve don
 
 * 🎨 HTML, CSS, JavaScript
 * 💠 Bootstrap (for responsive design)
-* 🧠 Laravel (for dynamic projects)
 * ☁️ GitHub Pages (for fast, free hosting)
 
 ---
@@ -51,7 +47,6 @@ A client-facing Laravel site for showcasing media, films, and galleries
 Creative alerts styled and animated to enhance UX
 ![SweetAlert Demo](https://your-gif-link.com/alert-demo.gif)
 
-> *Replace the image links with your actual GIF URLs after uploading them to Imgur, GitHub, or your preferred host.*
 
 ---
 
@@ -66,5 +61,3 @@ Creative alerts styled and animated to enhance UX
 ---
 
 Thanks for checking out my animated portfolio! 🎉
-
-Would you like this exported as a [README.md file](f) or [hosted as a webpage](f)?
