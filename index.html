@@ -5,14 +5,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- Primary Meta Tags -->
   <title>Vinod Suthar | Full-Stack Web Developer Portfolio</title>
   <meta name="title" content="Vinod Suthar | Full-Stack Web Developer Portfolio">
-  <meta name="description" content="Welcome to Vinod Suthar's personal portfolio. Full-Stack Developer specializing in Laravel, PHP, MySQL, and modern web development.">
+  <meta name="description"
+    content="Welcome to Vinod Suthar's personal portfolio. Full-Stack Developer specializing in Laravel, PHP, MySQL, and modern web development.">
 
   <!-- SEO Meta -->
-  <meta name="keywords" content="Vinod Suthar, VK Suthar, Laravel Developer, PHP Developer, Full Stack Developer, Portfolio, Web Developer India, Backend Developer, Frontend Developer">
+  <meta name="keywords"
+    content="Vinod Suthar, VK Suthar, Laravel Developer, PHP Developer, Full Stack Developer, Portfolio, Web Developer India, Backend Developer, Frontend Developer">
   <meta name="author" content="Vinod Suthar">
   <meta name="robots" content="index, follow">
 
@@ -20,14 +22,16 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://vkdeveloper900.github.io/Portfolio/">
   <meta property="og:title" content="Vinod Suthar | Web Developer Portfolio">
-  <meta property="og:description" content="Explore my personal portfolio showcasing web development projects, skills, experience, and certifications.">
+  <meta property="og:description"
+    content="Explore my personal portfolio showcasing web development projects, skills, experience, and certifications.">
   <meta property="og:image" content="https://vkdeveloper900.github.io/Portfolio/images/user-3.jpg">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://vkdeveloper900.github.io/Portfolio/">
   <meta property="twitter:title" content="Vinod Suthar | Full-Stack Developer">
-  <meta property="twitter:description" content="Laravel & PHP developer portfolio featuring projects, resume, and contact details.">
+  <meta property="twitter:description"
+    content="Laravel & PHP developer portfolio featuring projects, resume, and contact details.">
   <meta property="twitter:image" content="https://vkdeveloper900.github.io/Portfolio/images/user-3.jpg">
 
   <!-- Favicon -->
@@ -125,7 +129,7 @@
               <i class="fab fa-whatsapp"></i>
             </a>
           </li>
-          
+
 
           </li>
           <li><a class="Facebook" href="https://www.linkedin.com/in/vinod-suthar-30b8a1298/" aria-label="linkedin"
@@ -166,12 +170,12 @@
           development cycle—from creating a user interface to handling back-end logic and managing databases.
           This project gave me real-world experience in building efficient, scalable web applications.<br><br>
 
-          <b>I am currently working with PHP and Laravel </b> 
-          <p>
+          <b>I am currently working with PHP and Laravel </b>
+        <p>
           to further improve my skills and gain professional experience.
           I’m always eager to learn and grow in the field of development, and I’m now looking for opportunities to apply
           my skills and contribute to a dynamic team.
-          </p>  
+        </p>
         </p>
 
         <h2>You can contact me about creating a website, E-invitation card, or video.</h2><br>
@@ -222,7 +226,7 @@
             <span>Bootstrap</span>
           </div>
         </div>
-      
+
         <div class="bar">
           <div class="info">
             <img src="images/skills/html.webp" />
@@ -326,8 +330,8 @@
             <span>Canva</span>
           </div>
         </div>
-        
-        
+
+
       </div>
     </div>
   </section>
@@ -399,10 +403,35 @@
 
     <div class="box-container">
 
+
+      <!-- add new work on 20/-06/2025 -->
+
+      <div class="box tilt">
+        <img draggable="false" src="images/projects/vw.png" width="90%"
+          alt="Vishwakarma Welding Website" />
+        <div class="content">
+          <div class="tag">
+            <h3>VW Website</h3>
+          </div>
+          <div class="desc">
+          <p>A responsive website for Vishwakarma Welding Works, built using Bootstrap and HTML to showcase services and projects.</p>
+
+            <div class="btns">
+              <a href="https://vkdeveloper900.github.io/Vishwakarma-Welding/" class="btn" target="_blank"><i
+                  class="fas fa-eye"></i> View</a>
+              <a href="https://github.com/vkdeveloper900/Vishwakarma-Welding" class="btn" target="_blank">Code <i
+                  class="fas fa-code"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
       <!-- add new work on 28/-10/2024 -->
-
-
-
 
       <div class="box tilt">
         <img draggable="false" src="images/projects/Home  copy.png" width="90%" alt="project image" />
@@ -732,7 +761,7 @@
           </div>
         </div>
       </div>
-      
+
 
 
     </div>
@@ -781,7 +810,7 @@
           </div>
           <div class="button-area">
             <button type="submit">
-        
+
               Submit <i class="fa fa-paper-plane"></i></button>
           </div>
         </form>
@@ -872,65 +901,65 @@
 
 
   <!-- submit form script -->
- 
 
-<!-- submit form script -->
-<script>
-  window.addEventListener("load", function () {
-    const form = document.getElementById('contact-form');
-    const submitBtn = form.querySelector('button[type="submit"]');
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+  <!-- submit form script -->
+  <script>
+    window.addEventListener("load", function () {
+      const form = document.getElementById('contact-form');
+      const submitBtn = form.querySelector('button[type="submit"]');
 
-      if (!form.checkValidity()) {
-        form.reportValidity(); // Show browser validation messages
-        return;
-      }
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-      // Disable button and show loading
-      submitBtn.disabled = true;
-      const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = "Submitting... ⏳";
+        if (!form.checkValidity()) {
+          form.reportValidity(); // Show browser validation messages
+          return;
+        }
 
-      const data = new FormData(form);
-      const action = form.action;
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = "Submitting... ⏳";
 
-      fetch(action, {
-        method: 'POST',
-        body: data,
-      })
-        .then(() => {
-          alert("✅ Submitted! Thank you for your message.");
-          form.reset();
+        const data = new FormData(form);
+        const action = form.action;
+
+        fetch(action, {
+          method: 'POST',
+          body: data,
         })
-        .catch(() => {
-          alert("❌ Something went wrong. Please try again.");
-        })
-        .finally(() => {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-        });
-    });
-  });
-</script>
-<!-- submit form script end -->
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-      const navLinks = document.querySelectorAll('.nav-item a');
-  
-      navLinks.forEach(link => {
-          link.addEventListener('click', function () {
-              navLinks.forEach(nav => nav.classList.remove('active'));
-              this.classList.add('active');
+          .then(() => {
+            alert("✅ Submitted! Thank you for your message.");
+            form.reset();
+          })
+          .catch(() => {
+            alert("❌ Something went wrong. Please try again.");
+          })
+          .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
           });
       });
-  });
+    });
   </script>
-  
+  <!-- submit form script end -->
 
-  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const navLinks = document.querySelectorAll('.nav-item a');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+          navLinks.forEach(nav => nav.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+
+
+
 
 
 
