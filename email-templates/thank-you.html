@@ -1,0 +1,171 @@
+<!--
+  THANK-YOU AUTORESPONSE EMAIL — Vinod Suthar Portfolio
+  ======================================================
+  Sent to whoever submits the contact form on contact.html.
+
+  This is deliberately built as OLD-SCHOOL EMAIL HTML (tables, inline styles,
+  websafe font fallbacks) — NOT a copy of the site's style.css. Modern CSS
+  (grid, flexbox, CSS variables, backdrop-filter) is unreliable across email
+  clients (Outlook desktop especially), so every rule here is inlined and
+  every layout is table-based on purpose. Don't "clean this up" to match
+  the site's regular CSS — it will break in real inboxes.
+
+  WHERE TO PUT THIS:
+  - Formspree (Business/Platinum plan only — free plan can't do custom
+    autoresponse HTML): Settings → Plugins → Autoresponse → Custom Template.
+    Put everything inside <body>...</body> into their HTML tab. If you also
+    want the personalized "Hi {{name}}" greeting to actually work, Formspree
+    additionally requires a custom domain connected to your account — without
+    one it will NOT inject submitted field values, personalized or not.
+    The {{_unsubscribe}} link near the bottom is REQUIRED by Formspree for
+    any custom template, regardless of plan.
+  - EmailJS (works on their free plan, supports template variables without
+    needing a custom domain) — paste this whole file as the template body,
+    map {{name}} to the form's name field in EmailJS's template editor.
+  - Any other ESP (SendGrid, Mailgun, etc.) — same idea, adjust the merge
+    tag syntax ({{name}} vs %name% vs {name}) to whatever that tool expects.
+
+  {{name}} appears once, in the greeting, with a plain "Hey there 👋" fallback
+  commented next to it — swap based on whether your sender actually supports
+  the merge tag in this slot.
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanks for reaching out</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    /* Progressive enhancement only — every element below also carries inline
+       styles as the real fallback, since many clients strip <style> blocks. */
+    body { margin: 0; padding: 0; background-color: #0E1116; }
+    a { text-decoration: none; }
+    @media only screen and (max-width: 620px) {
+      .email-card { width: 100% !important; }
+      .stack-pad { padding-left: 24px !important; padding-right: 24px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#0E1116;">
+  <!-- preheader (hidden preview text in inbox list) -->
+  <div style="display:none; max-height:0; overflow:hidden; opacity:0; font-size:1px; line-height:1px; color:#0E1116;">
+    Got your message — I'll reply within 24–48 hours. Thanks for reaching out!
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0E1116;">
+    <tr>
+      <td align="center" style="padding: 32px 16px;">
+
+        <table role="presentation" class="email-card" width="600" cellpadding="0" cellspacing="0" border="0"
+               style="width:600px; max-width:600px; background-color:#161B22; border:1px solid #262D37; border-radius:14px; overflow:hidden;">
+
+          <!-- HEADER -->
+          <tr>
+            <td class="stack-pad" style="padding: 28px 36px 20px; border-bottom:1px solid #262D37;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="left" style="font-family:'JetBrains Mono', Consolas, 'Courier New', monospace; font-size:16px; font-weight:700; color:#E6EDF3;">
+                    vinod<span style="color:#FF4433;">.</span>suthar
+                  </td>
+                  <td align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#3FB950;">
+                    ● MESSAGE RECEIVED
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- BODY -->
+          <tr>
+            <td class="stack-pad" style="padding: 32px 36px 8px;">
+              <p style="margin:0 0 14px; font-family:'JetBrains Mono', Consolas, monospace; font-size:12px; letter-spacing:1px; text-transform:uppercase; color:#FF4433;">
+                // thank you
+              </p>
+              <h1 style="margin:0 0 18px; font-family:Georgia, 'Times New Roman', serif; font-size:26px; line-height:1.3; font-weight:700; color:#E6EDF3;">
+                Hey there 👋 <!-- or: Hi {{name}} 👋 — only works with a Formspree custom domain, or on EmailJS -->
+              </h1>
+              <p style="margin:0 0 16px; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:1.65; color:#8B949E;">
+                Thanks for reaching out through my portfolio. I've received your message and genuinely appreciate you taking the time to write in.
+              </p>
+              <p style="margin:0 0 28px; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:1.65; color:#8B949E;">
+                I read every message myself — no auto-triage, no forms falling into a black hole. I'll get back to you personally within <strong style="color:#E6EDF3;">24–48 hours</strong>.
+              </p>
+
+              <!-- JSON-style status card (site's signature motif, recreated email-safe) -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color:#0E1116; border:1px solid #262D37; border-radius:10px; margin-bottom:28px;">
+                <tr>
+                  <td style="padding:18px 20px; font-family:'JetBrains Mono', Consolas, monospace; font-size:13px; line-height:1.9; color:#8B949E;">
+                    <span style="color:#8B949E;">{</span><br>
+                    &nbsp;&nbsp;<span style="color:#79C0FF;">"status"</span><span style="color:#8B949E;">:</span> <span style="color:#A5D6A7;">"received"</span><span style="color:#8B949E;">,</span><br>
+                    &nbsp;&nbsp;<span style="color:#79C0FF;">"response_time"</span><span style="color:#8B949E;">:</span> <span style="color:#A5D6A7;">"24–48 hours"</span><span style="color:#8B949E;">,</span><br>
+                    &nbsp;&nbsp;<span style="color:#79C0FF;">"next_step"</span><span style="color:#8B949E;">:</span> <span style="color:#A5D6A7;">"personal reply from Vinod"</span><br>
+                    <span style="color:#8B949E;">}</span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA button (bulletproof table-based button) -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;">
+                <tr>
+                  <td align="center" bgcolor="#FF4433" style="border-radius:10px;">
+                    <a href="https://vkdeveloper900.github.io/Portfolio/projects.html" target="_blank"
+                       style="display:inline-block; padding:13px 28px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; color:#ffffff; text-decoration:none; border-radius:10px;">
+                      View My Projects →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- URGENT CONTACT STRIP -->
+          <tr>
+            <td class="stack-pad" style="padding: 4px 36px 32px;">
+              <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:1.6; color:#8B949E;">
+                Need to reach me sooner? WhatsApp is fastest:
+                <a href="https://wa.me/917568293812" style="color:#FF4433; font-weight:700;">+91 75682 93812</a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td class="stack-pad" style="padding: 24px 36px; background-color:#1C232C; border-top:1px solid #262D37;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="left" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#8B949E;">
+                    <a href="https://github.com/vkdeveloper900" style="color:#8B949E;">GitHub</a> ·
+                    <a href="https://www.linkedin.com/in/vinod-suthar-30b8a1298/" style="color:#8B949E;">LinkedIn</a> ·
+                    <a href="https://instagram.com/vksuthar_" style="color:#8B949E;">Instagram</a> ·
+                    <a href="https://t.me/VKSUTHAR900" style="color:#8B949E;">Telegram</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top:14px; font-family:Arial, Helvetica, sans-serif; font-size:11px; line-height:1.6; color:#8B949E;">
+                    Vinod Suthar · Ahmedabad, Gujarat, India<br>
+                    You're receiving this because you submitted a contact form at
+                    <a href="https://vkdeveloper900.github.io/Portfolio/" style="color:#8B949E;">vkdeveloper900.github.io/Portfolio</a>.
+                    <!-- Formspree requires this exact tag in any custom autoresponse template -->
+                    {{_unsubscribe}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

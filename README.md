@@ -33,7 +33,9 @@ develoeprvk/
 │   ├── vk-logo.jpg      ✅ Owner's VK monogram logo — used as favicon + apple-touch-icon on all pages
 │   └── og-image.svg     (social-share image source — still needs PNG export, see TODO)
 ├── robots.txt           ✅ DONE
-└── sitemap.xml          ✅ DONE (uses vkdeveloper900.github.io — update if deployed elsewhere)
+├── sitemap.xml          ✅ DONE (uses vkdeveloper900.github.io — update if deployed elsewhere)
+└── email-templates/
+    └── thank-you.html   ✅ DONE — contact-form autoresponse email, see §13
 ```
 
 **Rule:** One shared `css/style.css` and `js/main.js` for ALL pages. Never create per-page CSS/JS files. Reuse existing classes before adding new ones.
@@ -224,5 +226,15 @@ The About Me photo and 4 project thumbnails were hotlinked to `https://vkdevelop
 - `images/projects/{billing-web,paperselling,vw,sweet}.jpg` — project thumbnails, converted from PNG (originals were 3.5–7.2MB screenshots at ~3584px wide) down to ~900px-wide JPEGs at 27–60KB each. No EXIF issue on these (screenshots, not camera photos).
 - All `<img>` tags in `index.html` and `projects.html` updated from the dead hotlinked URLs to these local paths. The Person JSON-LD `image` field also updated to point at `about-photo.jpg` instead of the logo.
 - The 3 standalone "Live" project links (Paper-Selling-Website, Vishwakarma-Welding, sweetalert-showcase) are separate repos and still resolve fine (checked via HTTP status) — only the `Portfolio` repo's assets were affected by the rename.
+
+## 13. Contact form autoresponse email template
+
+`email-templates/thank-you.html` — branded "thank you for reaching out" email sent to whoever submits the contact form. Built as proper **email-safe HTML**: table-based layout, every rule inlined, websafe font fallbacks (not a copy of `style.css` — modern CSS like grid/flexbox/custom properties doesn't render reliably in email clients, Outlook desktop especially, so don't "clean this up" to match the site's regular CSS).
+
+**Important limitation to know before wiring this up:** Formspree's **free plan cannot send a custom HTML autoresponse at all** — custom templates require the Business/Platinum plan. Even on a paid plan, personalizing with the submitter's name (`{{name}}`) additionally requires a **custom domain connected to the Formspree account** — without one, submitted field values aren't injected into the autoresponse, so the template defaults to a generic "Hey there 👋" greeting (the personalized version is commented inline in the file). The `{{_unsubscribe}}` tag near the footer is required by Formspree for any custom template regardless of plan.
+
+**Two ways to actually use it:**
+1. **Formspree (Business/Platinum):** Settings → Plugins → Autoresponse → Custom Template. Paste the `<body>` contents into their HTML tab (don't include the `<style>` block — Formspree wants CSS in a separate CSS tab and auto-inlines it).
+2. **EmailJS (free tier, supports `{{name}}` personalization without needing a custom domain):** paste the whole file as an EmailJS template, map `{{name}}` to the form's `name` field. Would need EmailJS's SDK wired into `contact.html`'s submit handler in `main.js` instead of (or alongside) the current Formspree fetch — not done yet, ask if you want this built.
 
 All four pages (`index.html`, `projects.html`, `experience.html`, `contact.html`) are now built and cross-linked.
