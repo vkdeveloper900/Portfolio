@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow" cx="80%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#FF4433" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FF4433" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#0E1116"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect x="0" y="0" width="1200" height="630" fill="none" stroke="#262D37" stroke-width="2"/>
+
+  <text x="90" y="220" font-family="'JetBrains Mono', monospace" font-size="24" letter-spacing="2" fill="#FF4433">// available_for_hire: true</text>
+
+  <text x="88" y="320" font-family="'Sora', sans-serif" font-size="72" font-weight="700" fill="#E6EDF3">Vinod Suthar</text>
+
+  <text x="90" y="380" font-family="'JetBrains Mono', monospace" font-size="30" fill="#79C0FF">Full Stack Laravel Developer</text>
+
+  <text x="90" y="440" font-family="'Inter', sans-serif" font-size="24" fill="#8B949E">REST APIs · Payment Gateways · SMS/OTP · Microsoft 365</text>
+
+  <g font-family="'JetBrains Mono', monospace" font-size="20" fill="#8B949E">
+    <rect x="88" y="470" width="180" height="42" rx="21" fill="#161B22" stroke="#262D37"/>
+    <text x="178" y="497" text-anchor="middle" fill="#3FB950">Laravel</text>
+    <rect x="280" y="470" width="150" height="42" rx="21" fill="#161B22" stroke="#262D37"/>
+    <text x="355" y="497" text-anchor="middle" fill="#FFA657">MySQL</text>
+    <rect x="442" y="470" width="180" height="42" rx="21" fill="#161B22" stroke="#262D37"/>
+    <text x="532" y="497" text-anchor="middle" fill="#79C0FF">REST API</text>
+  </g>
+
+  <text x="90" y="580" font-family="'JetBrains Mono', monospace" font-size="20" fill="#8B949E">vinod.suthar</text>
+
+  <g transform="translate(980,60)" opacity="0.9">
+    <rect width="140" height="140" rx="30" fill="#161B22" stroke="#262D37" stroke-width="2"/>
+    <text x="70" y="94" font-family="'JetBrains Mono', monospace" font-size="56" font-weight="700" fill="#FF4433" text-anchor="middle">&lt;/&gt;</text>
+  </g>
+</svg>

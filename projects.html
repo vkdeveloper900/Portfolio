@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects | Vinod Suthar — Full Stack Laravel Developer</title>
+  <meta name="description" content="Projects built by Vinod Suthar — Laravel applications, REST APIs, HRMS systems, billing platforms and frontend sites.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Vinod Suthar">
+  <!-- update this domain if you deploy to somewhere other than vkdeveloper900.github.io -->
+  <link rel="canonical" href="https://vkdeveloper900.github.io/projects.html">
+  <link rel="icon" type="image/jpeg" href="images/vk-logo.jpg">
+  <link rel="apple-touch-icon" href="images/vk-logo.jpg">
+  <meta name="theme-color" content="#0E1116">
+  <meta name="msapplication-TileColor" content="#0E1116">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vkdeveloper900.github.io/projects.html">
+  <meta property="og:title" content="Projects | Vinod Suthar — Full Stack Laravel Developer">
+  <meta property="og:description" content="Projects built by Vinod Suthar — Laravel applications, REST APIs, HRMS systems, billing platforms and frontend sites.">
+  <meta property="og:image" content="images/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Projects | Vinod Suthar — Full Stack Laravel Developer">
+  <meta name="twitter:description" content="Projects built by Vinod Suthar — Laravel applications, REST APIs, HRMS systems, billing platforms and frontend sites.">
+  <meta name="twitter:image" content="images/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vkdeveloper900.github.io/" },
+      { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://vkdeveloper900.github.io/projects.html" }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">vinod<span>.</span>suthar</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="container page-hero">
+    <p class="section-label">// portfolio</p>
+    <h1>Projects I've Built</h1>
+    <p class="lead">A collection of Laravel applications, REST APIs, and frontend projects — from production HRMS systems to quick client sites.</p>
+  </header>
+
+  <!-- PROJECTS -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="filter-tabs reveal">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="laravel">Laravel</button>
+        <button class="filter-tab" data-filter="frontend">Frontend</button>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card reveal" data-filter-item="laravel">
+          <div class="project-thumb"><span>[ screenshot ]</span></div>
+          <div class="project-body">
+            <h3>Inventory Management System</h3>
+            <p>Stock &amp; product management with GST invoice generation, role-permission control and AJAX-based operations.</p>
+            <div class="tag-row">
+              <span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">AJAX</span>
+            </div>
+            <div class="project-links">
+              <a href="https://business.adoisstudio.com/admin/login" target="_blank" rel="noopener">Live ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal d1" data-filter-item="laravel">
+          <div class="project-thumb"><span>[ screenshot ]</span></div>
+          <div class="project-body">
+            <h3>HRMS Platform</h3>
+            <p>HR management system with role &amp; permission management, REST APIs and Outlook Calendar meeting automation.</p>
+            <div class="tag-row">
+              <span class="tag">Laravel</span><span class="tag">REST API</span><span class="tag">MS 365</span>
+            </div>
+            <div class="project-links">
+              <span style="color: var(--muted); font-size: 0.85rem;">Client project — private</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal d2" data-filter-item="laravel">
+          <div class="project-thumb">
+            <img src="images/projects/billing-web.jpg" alt="Billing System screenshot" loading="lazy">
+          </div>
+          <div class="project-body">
+            <h3>Billing System</h3>
+            <p>Laravel-based system for electronic shops — inventory tracking, invoice printing and sales reports.</p>
+            <div class="tag-row">
+              <span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Bootstrap</span>
+            </div>
+            <div class="project-links">
+              <span style="color: var(--muted); font-size: 0.85rem;">Demo shared on LinkedIn</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-filter-item="laravel">
+          <div class="project-thumb"><span>[ screenshot ]</span></div>
+          <div class="project-body">
+            <h3>Snap Spirit — Photographer Studio</h3>
+            <p>Studio showcase site with a gallery CMS for a professional photography business.</p>
+            <div class="tag-row">
+              <span class="tag">Laravel</span><span class="tag">Bootstrap</span>
+            </div>
+            <div class="project-links">
+              <span style="color: var(--muted); font-size: 0.85rem;">Demo shared on LinkedIn</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal d1" data-filter-item="frontend">
+          <div class="project-thumb">
+            <img src="images/projects/paperselling.jpg" alt="Paper Selling Website screenshot" loading="lazy">
+          </div>
+          <div class="project-body">
+            <h3>Paper Selling Website</h3>
+            <p>Exam-paper platform with categories, search and an admin panel.</p>
+            <div class="tag-row">
+              <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">PHP</span>
+            </div>
+            <div class="project-links">
+              <a href="https://vkdeveloper900.github.io/Paper-Selling-Website/" target="_blank" rel="noopener">Live ↗</a>
+              <a href="https://github.com/vkdeveloper900/Paper-Selling-Website" target="_blank" rel="noopener">Code ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal d2" data-filter-item="frontend">
+          <div class="project-thumb">
+            <img src="images/projects/vw.jpg" alt="Vishwakarma Welding website screenshot" loading="lazy">
+          </div>
+          <div class="project-body">
+            <h3>VW — Vishwakarma Welding</h3>
+            <p>Responsive business website for a welding services company.</p>
+            <div class="tag-row">
+              <span class="tag">HTML</span><span class="tag">Bootstrap</span>
+            </div>
+            <div class="project-links">
+              <a href="https://vkdeveloper900.github.io/Vishwakarma-Welding/" target="_blank" rel="noopener">Live ↗</a>
+              <a href="https://github.com/vkdeveloper900/Vishwakarma-Welding" target="_blank" rel="noopener">Code ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-filter-item="frontend">
+          <div class="project-thumb">
+            <img src="images/projects/sweet.jpg" alt="SweetAlert Showcase screenshot" loading="lazy">
+          </div>
+          <div class="project-body">
+            <h3>SweetAlert Showcase</h3>
+            <p>Interactive alert &amp; modal demos built with SweetAlert.</p>
+            <div class="tag-row">
+              <span class="tag">JS</span><span class="tag">SweetAlert</span>
+            </div>
+            <div class="project-links">
+              <a href="https://vkdeveloper900.github.io/sweetalert-showcase/" target="_blank" rel="noopener">Live ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="center-cta reveal">
+        <a href="contact.html" class="btn btn-primary">Have a project in mind? →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <p class="brand">vinod<span>.</span>suthar</p>
+          <p>Thank you for visiting my portfolio. I build scalable Laravel applications, REST APIs and business automation systems. Keep Rising 🚀</p>
+          <div class="footer-socials">
+            <a href="https://github.com/vkdeveloper900" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/vinod-suthar-30b8a1298/" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://instagram.com/vksuthar_" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/VKSUTHAR900" target="_blank" rel="noopener" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://wa.me/917568293812" target="_blank" rel="noopener" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:vksuthar900@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact Info</h4>
+          <ul class="footer-contact">
+            <li><span>📞</span><span>+91 75682 93812</span></li>
+            <li><span>✉️</span><span>vksuthar900@gmail.com</span></li>
+            <li><span>📍</span><span>Ahmedabad, Gujarat, India</span></li>
+            <li><span>🏡</span><span>Sadri, Pali, Rajasthan — 306702</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 · Designed with <span class="heart">❤</span> by VKDEVELOPER · All rights reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
