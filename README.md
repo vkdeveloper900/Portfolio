@@ -12,30 +12,36 @@
 - **Purpose:** Professional developer portfolio — targets recruiters & freelance clients
 - **Positioning:** "Laravel Developer specializing in APIs & Integrations (Payments, SMS/OTP, Microsoft 365)"
 - **Tech:** Pure HTML + CSS + Vanilla JS (NO frameworks, NO build step)
-- **Hosting:** GitHub Pages (static only — no backend/PHP possible)
-- **Old portfolio (reference/data source):** https://vkdeveloper900.github.io/Portfolio/
+- **Hosting:** GitHub Pages — **live at https://vkdeveloper900.github.io/Portfolio/**
+- **Sibling project:** `D:\Vinod_Suthar\Projects\Portfolio_Backend` — a Laravel admin panel (Projects, Project Categories, Experience, Leads/contact submissions) that exists and works standalone, but **is not yet wired up to this frontend** — see §8 TODO #2. Editing content in the admin panel currently has no effect on the live site.
 
 ---
 
 ## 2. File Structure
 
 ```
-develoeprvk/
-├── index.html          ✅ DONE (Home — all sections built)
-├── projects.html       ✅ DONE (filter tabs + 7 project cards)
-├── experience.html     ✅ DONE (full timeline + education + specializations recap)
-├── contact.html        ✅ DONE (info cards + Formspree form — needs real FORM_ID)
+portfolio/
+├── index.html            ✅ Home — hero, process flow, about, skills, specializations, featured projects, experience preview, contact strip
+├── projects.html         ✅ Full projects grid, filterable, links to project-detail.html
+├── project-detail.html   ✅ Single reusable template — reads ?slug= and renders from js/projects-data.js
+├── experience.html       ✅ Full work + education timeline
+├── contact.html          ✅ Contact cards + Save Contact vCard button + AJAX Formspree form
 ├── css/
-│   └── style.css       ✅ DONE (single shared stylesheet — ALL pages use this; added .page-hero, .filter-tabs)
+│   └── style.css         ✅ Single shared stylesheet — ALL pages use this
 ├── js/
-│   └── main.js         ✅ DONE (shared JS — nav, typing, reveal, counters, filter tabs, to-top)
+│   ├── main.js            ✅ Shared JS — nav, typing, reveal, process flow, filter tabs, contact form, project-detail rendering, theme bits, to-top
+│   └── projects-data.js   ✅ Single source of truth for all project content (see §14) — shape mirrors the admin backend's Project model on purpose
 ├── images/
-│   ├── vk-logo.jpg      ✅ Owner's VK monogram logo — used as favicon + apple-touch-icon on all pages
-│   └── og-image.svg     (social-share image source — still needs PNG export, see TODO)
-├── robots.txt           ✅ DONE
-├── sitemap.xml          ✅ DONE (uses vkdeveloper900.github.io — update if deployed elsewhere)
+│   ├── about-photo.png    ✅ Transparent PNG headshot (see §12 — do not swap back to JPG, JPG can't hold transparency)
+│   ├── vk-logo.jpg        ✅ Favicon + apple-touch-icon on all pages
+│   ├── vcard-photo.jpg    ✅ Small square photo embedded (base64) in vinod-suthar.vcf
+│   ├── og-image.svg       ⏳ Social-share image source — still needs PNG export, see TODO
+│   ├── antigravity.png, kiro.svg  ✅ Real brand logos pulled directly from the products' own sites (see §15)
+│   └── projects/          ✅ Local project thumbnails
+├── vinod-suthar.vcf      ✅ Downloadable vCard (see §16)
+├── robots.txt / sitemap.xml  ✅ Both point at vkdeveloper900.github.io — update if ever deployed elsewhere
 └── email-templates/
-    └── thank-you.html   ✅ DONE — contact-form autoresponse email, see §13
+    └── thank-you.html    ✅ Contact-form autoresponse email template, see §13
 ```
 
 **Rule:** One shared `css/style.css` and `js/main.js` for ALL pages. Never create per-page CSS/JS files. Reuse existing classes before adding new ones.
@@ -56,7 +62,7 @@ develoeprvk/
 | `--muted` | `#8B949E` | Paragraphs, secondary text |
 | `--accent` | `#FF4433` | Laravel red — buttons, links, highlights, timeline dots |
 | `--accent-soft` | `rgba(255,68,51,0.12)` | Accent hover backgrounds, icon chips |
-| `--green` | `#3FB950` | Status/success (200 OK, online dot, available badge) |
+| `--green` | `#3FB950` | Status/success (200 OK, live badges) |
 | `--blue` | `#79C0FF` | JSON keys, typing line text |
 | `--yellow` | `#FFA657` | JSON booleans/numbers |
 
@@ -82,7 +88,7 @@ Font links + Font Awesome 6.5.1 (cdnjs) must be in `<head>` of every page.
 
 ### 3.4 Signature Element
 
-Hero has a **JSON API response card** (`GET /api/developer/vinod-suthar → 200 OK`) — this is the brand identity of the site. Keep this concept; API/JSON theming may repeat subtly (e.g. section labels like `// about me`, `also_worked_with:` in mono font).
+Hero has a **JSON API response card** (`GET /api/developer/vinod-suthar → 200 OK`) — this is the brand identity of the site. Keep this concept; API/JSON theming repeats subtly elsewhere (section labels like `// about me`, the case-study `<code>` styling on project-detail.html).
 
 ---
 
@@ -93,61 +99,45 @@ Hero has a **JSON API response card** (`GET /api/developer/vinod-suthar → 200 
 | Navbar (sticky, blur) | `.navbar`, `.nav-inner`, `.nav-links`, `.nav-cta`, `.hamburger` |
 | Buttons | `.btn` + `.btn-primary` (red) / `.btn-outline` |
 | Section header | `.section-head` > `.section-label` (mono, `// label` style) + `h2` + `p` |
-| Cards | `.spec-card` (icon cards), `.project-card` (thumb + body + tags + links) |
+| Cards | `.spec-card`, `.project-card` (thumb + body + tags + links), `.contact-card` |
 | Tags | `.tag` (mono, pill, bordered) inside `.tag-row` |
 | Timeline | `.timeline` > `.t-item` (`.t-date`, `h3`, `.t-org`, `ul`) — red dots, left line |
-| Stats | `.stats-bar` > `.stat` (`.num[data-count]` auto-animates, `.lbl`) |
+| Process flow | `.process-flow` > `.process-step` — see §9 |
 | JSON card | `.json-card` (`.jk` keys blue, `.js` strings green, `.jb` bool orange, `.jp` punctuation) |
 | Contact strip | `.contact-strip` (gradient CTA banner) |
-| Footer | `.footer` > `.footer-grid` (3 cols: brand+socials / quick links / contact info) + `.footer-bottom` |
-| Social icon buttons | `.hero-socials a` / `.footer-socials a` with Font Awesome `<i>` |
-| Scroll reveal | Add `.reveal` (+ optional `.d1`/`.d2`/`.d3` delays) — JS handles visibility |
+| Save Contact button | `.save-contact-btn` — see §16 |
+| Project detail | `.detail-back`, `.detail-title`, `.detail-thumb`, `.case-study`, `.detail-media-grid` — see §14 |
+| Footer | `.footer` > `.footer-grid` (3 cols) + `.footer-bottom` |
+| Scroll reveal | Add `.reveal` (+ optional `.d1`–`.d5` delays) — JS handles visibility |
 | Back to top | `.to-top` button with id `toTop` |
 
 ### JS behaviors in main.js (auto-work if IDs/classes present)
 - `#hamburger` + `#navLinks` → mobile menu
 - `#typeText` → typing effect (roles array)
 - `.reveal` → IntersectionObserver fade-up
-- `.num[data-count]` → animated counters
+- `.filter-tab` / `[data-filter-item]` → project category filtering
+- `#contactForm` → AJAX Formspree submit with success/error panels
+- `#detailWrap` + `PROJECTS` global → project-detail.html rendering (see §14)
 - `#toTop` → back-to-top button
 
 ---
 
 ## 5. Page Specs
 
-### 5.1 index.html ✅ DONE
-Sections in order: Navbar → Hero (typing + JSON card + socials + floating icons) → "How I Build" process flow (6-step animated connector, see §9 — replaced the old stats bar) → About (photo + bio + info grid + animated SVG cartoon developer) → Skills (devicon tiles + also_worked_with tags) → Specializations (3 cards) → Featured Projects (3 cards) → Experience & Education preview (two-col timelines) → Contact strip → Footer → to-top button.
+### 5.1 index.html ✅
+Navbar → Hero (typing + JSON card + socials) → "How I Build" process flow (§9) → About (photo + bio, Adler Talent Solutions linked to adlertalent.com) → Skills (§15 — expanded tile set) → Specializations (3 cards) → Featured Projects (3 cards, link to project-detail.html) → Experience/Education preview → Contact strip → Footer.
 
-### 5.2 projects.html ✅ DONE
-- Same navbar (active = Projects) + footer as index
-- Page hero: small header (`// portfolio`, "Projects Made", subtitle)
-- Optional filter tabs: All / Laravel / Frontend (vanilla JS, `data-filter` attributes)
-- Project grid using `.project-card`. Projects list:
+### 5.2 projects.html ✅
+Filter tabs (All/Laravel/Frontend) + full project grid. Every card's **title and thumbnail now link to `project-detail.html?slug=...`** (§14); cards with no public live/code link show a "Details →" action instead of nothing.
 
-| Project | Description | Tags | Links |
-|---|---|---|---|
-| Inventory Management System | Stock & product mgmt, GST invoices, roles/permissions, AJAX | Laravel, MySQL, AJAX | Live: https://business.adoisstudio.com/admin/login |
-| HRMS Platform (Adler) | HR system: roles/permissions, REST APIs, Outlook meeting automation | Laravel, REST API, MS 365 | client work — no public link |
-| Billing System | Electronic shop: inventory, invoice printing, sales reports | Laravel, MySQL, Bootstrap | LinkedIn demo post |
-| Snap Spirit / Photographer Studio | Studio showcase site, gallery CMS | Laravel, Bootstrap | LinkedIn demo post |
-| Paper Selling Website | Exam-paper platform, categories, search, admin | HTML, CSS, JS, PHP | Live: https://vkdeveloper900.github.io/Paper-Selling-Website/ · Code: github.com/vkdeveloper900/Paper-Selling-Website |
-| VW (Vishwakarma Welding) | Responsive business site | HTML, Bootstrap | Live: https://vkdeveloper900.github.io/Vishwakarma-Welding/ · Code: github.com/vkdeveloper900/Vishwakarma-Welding |
-| SweetAlert Showcase | Interactive alert demos | JS, SweetAlert | Live: https://vkdeveloper900.github.io/sweetalert-showcase/ |
+### 5.3 project-detail.html ✅ (new)
+Single reusable template, not 7 separate files — see §14 for how it works.
 
-- Thumbnails: old site images can be hotlinked temporarily from `https://vkdeveloper900.github.io/Portfolio/images/projects/` (e.g. `vw.png`, `sweet.png`, `paperselling.png`, `Home.png`, `billing%20web.png`) — replace with local `images/` later
-- EXCLUDE tiny old projects: contact page, about page, location page, dummy university, duplicate portfolios
+### 5.4 experience.html ✅
+Full work + education timeline. "Adler Talent Solutions Pvt. Ltd." is linked to `https://adlertalent.com/` in both places it appears (here and on index.html).
 
-### 5.3 experience.html ✅ DONE
-- Full `.timeline` — Work: Adler Talent Solutions (Laravel Developer, Aug 2025–Present, Ahmedabad: HRMS, REST APIs, roles/permissions, MySQL optimization, integrations) → ADOIS Games (Apprenticeship, Oct 2024–Jul 2025: Laravel apps, REST APIs, auth modules, query optimization) → Early roles 2022 (Computer Operator — Gov. Municipal Board; Surveyor — Oasis Softapp; Data Entry — MS Excel)
-- Education timeline: BCA — SPU College Falna, JNV University Jodhpur (2021–24) → Sr. Secondary Science Agriculture — DMB Govt School Sadri, RBSE (2019–21) → Secondary — Saraswati Vidya Mandir, Sadri, RBSE (2006–19)
-- Optional: specializations recap cards
-
-### 5.4 contact.html ✅ DONE (form action still points to placeholder FORM_ID)
-- Email card lists 3 addresses: vksuthar900@gmail.com, vkdeveloper900@gmail.com, vksuthar900@icloud.com
-- Form submits via AJAX (fetch, not a hard page navigation) with an animated success panel (circle+checkmark draw) and an animated error panel (shake-in), both with a reset button back to the form
-- Contact info cards: phone/WhatsApp, email, location (use Font Awesome icons)
-- Contact form → **Formspree** (`https://formspree.io/f/FORM_ID` — owner must create free account & replace FORM_ID). Fields: name, email, message. Style inputs dark: `--surface` bg, `--border`, focus `--accent`
-- All social links + "Keep Rising 🚀" line
+### 5.5 contact.html ✅
+Contact cards (phone/WhatsApp with Save Contact button, email ×3, location) + AJAX Formspree form with animated success/error panels. **Formspree form ID is real and live** (`xvzerqpw`) — not a placeholder, already tested working.
 
 ---
 
@@ -155,16 +145,16 @@ Sections in order: Navbar → Hero (typing + JSON card + socials + floating icon
 
 - **Name:** Vinod Suthar · **Brand:** VKDEVELOPER · logo text: `vinod.suthar` (dot in accent red)
 - **Roles (typing effect):** Full Stack Developer, Laravel Developer, API & Integration Specialist, Freelance Developer
-- **Email:** vksuthar900@gmail.com · **Phone/WhatsApp:** +91 75682 93812
+- **Emails:** vksuthar900@gmail.com · vkdeveloper900@gmail.com · vksuthar900@icloud.com
+- **Phone/WhatsApp:** +91 75682 93812
 - **Location:** Ahmedabad, Gujarat (current) · Sadri, Pali, Rajasthan — 306702 (home)
-- **Company:** Adler Talent Solutions Pvt. Ltd. (Laravel Developer, Aug 2025–Present)
+- **Company:** Adler Talent Solutions Pvt. Ltd. (Laravel Developer, Aug 2025–Present) — linked to adlertalent.com on the site; **vCard ORG field intentionally says "VK Developer" instead**, per owner's explicit request
 - **Resume:** https://drive.google.com/file/d/1jMJ4gY8_PHOWBuebPLd4mOzOtIjykf0Y/view
-- **Photo:** https://vkdeveloper900.github.io/Portfolio/images/vk2.JPG (replace with local later)
+- **Photo:** `images/about-photo.png` (local, transparent — see §12)
 - **Socials:** GitHub `vkdeveloper900` · LinkedIn `vinod-suthar-30b8a1298` · Instagram `vksuthar_` · Telegram `VKSUTHAR900` · WhatsApp wa.me/917568293812
-- **Skills (devicon tiles):** PHP, Laravel, MySQL, JavaScript, HTML5, CSS3, Bootstrap, Git, GitHub, jQuery/AJAX, VS Code, PhpStorm
+- **Skills tiles:** PHP, Laravel, MySQL, JavaScript, HTML5, CSS3, Bootstrap, Git, GitHub, GitLab, Bitbucket, jQuery/AJAX, VS Code, PhpStorm, Android Studio, Cursor, Claude, Codex, Antigravity, Kiro (see §15)
 - **also_worked_with tags:** REST APIs, C, C++, Java, SQL, VB.NET, SweetAlert, XAMPP/MAMP
-- **Stats:** 15+ Projects · 6+ Integrations · 2 Companies · ∞ Cups of Chai ☕
-- **EXCLUDED on purpose (do NOT re-add):** MS Word/Excel/PowerPoint/Keynote/Canva skills, Snapchat/Facebook links, "E-invitation card/video" services line
+- **EXCLUDED on purpose (do NOT re-add):** MS Office/Canva skills, Snapchat/Facebook links, stats bar (Projects Built/Integrations Shipped — replaced by the process flow, see §9)
 
 ---
 
@@ -173,68 +163,73 @@ Sections in order: Navbar → Hero (typing + JSON card + socials + floating icon
 1. **Voice:** Professional but friendly; small personality touches OK (chai ☕, 🚀). No student-era phrasing.
 2. **Every page:** same `<head>` (fonts + FA + style.css), same navbar (correct `.active` link), same footer, `<script src="js/main.js">` before `</body>`.
 3. **Accessibility:** `aria-label` on icon links, `alt` on images, `prefers-reduced-motion` already handled — keep it.
-4. **Performance:** `loading="lazy"` on below-fold images; no heavy libraries; CDN only (Google Fonts, Font Awesome, devicon).
+4. **Performance:** `loading="lazy"` on below-fold images; no heavy libraries; CDN only (Google Fonts, Font Awesome, devicon, Simple Icons).
 5. **Links:** external → `target="_blank" rel="noopener"`.
 6. **Animations:** use existing `.reveal` system; don't add new animation libraries (no AOS/GSAP).
 7. **Copy style:** section labels in mono like `// projects`, `// journey`.
 
+---
+
 ## 8. Pending TODO (priority order)
 
-1. Create a free Formspree account and replace `FORM_ID` in `contact.html`'s form `action` — form won't actually send until this is done
-2. **Export `images/og-image.svg` to `images/og-image.png` (1200×630)** — any SVG-to-PNG tool/converter works. All 4 pages already reference `images/og-image.png` in their `og:image`/`twitter:image` meta tags, so social previews (WhatsApp/Twitter/LinkedIn/Slack) will show a broken image until this PNG exists — most platforms don't render SVG for link previews.
-3. ~~Local screenshots into `images/` + replace hotlinked project thumbs & about photo~~ ✅ DONE — see §12
-4. Deploy: push to GitHub repo → GitHub Pages (suggest repo name `vkdeveloper900.github.io` for clean root URL)
+1. **Connect the admin panel backend to make content dynamic** — the biggest real gap right now. `Portfolio_Backend` (Laravel, at `D:\Vinod_Suthar\Projects\Portfolio_Backend`) already has working CRUD for Projects, Project Categories, and Experience, but this frontend still reads from a **hardcoded** `js/projects-data.js`. To actually make the admin panel control the live site: deploy the backend somewhere reachable (it currently only runs locally), build a public read-only API endpoint (e.g. `GET /api/projects`, `GET /api/experience`), and change `project-detail.html`/`projects.html`/`experience.html` to `fetch()` from that API instead of the static JS file. `js/projects-data.js` was deliberately shaped to match the backend's `Project` model precisely so this swap is mostly "change where the data comes from," not a rewrite of the rendering logic.
+2. **Export `images/og-image.svg` to `images/og-image.png` (1200×630)** — any SVG-to-PNG converter works. All pages already reference the PNG in `og:image`/`twitter:image`, so social previews (WhatsApp/LinkedIn/Slack) show a broken image until this exists.
+3. Real screenshots for the 2 project thumbnails still showing `[ screenshot ]` placeholders (Inventory Management System, HRMS Platform, Snap Spirit).
 
-## 9. Stats section → replaced with "How I Build" process flow
+---
 
-The stats bar (Projects Built / Integrations Shipped / Companies Worked / Cups of Chai) was removed entirely per owner request — replaced with a 6-step animated process flow (`.process-flow`) on `index.html`: Requirement → Flow & Planning → UI/UX Design → Development → Integration & Testing → Delivered.
+## 9. "How I Build" process flow (index.html)
 
-- Desktop (≥900px): horizontal row of icon nodes connected by a line that draws in (red, over gray) when scrolled into view. The line math relies on all 6 `.process-step` being equal-width flex children with no gap — first icon center sits at exactly 8.333% of the row width, last at 91.667%, so the connector's `left`/`width` are hardcoded to those percentages. **If the step count ever changes from 6, these percentages must be recalculated** (formula: first-center = 50%/n, last-center = 100% − 50%/n).
-- Mobile (<900px): flips to a vertical stepper — `.process-flow` gets `padding-left:66px`, icons become `position:absolute; left:-66px` per step, and the connector line becomes a vertical bar at `left:26px` (half the 52px icon width) spanning down instead of across.
-- Each step also fades up individually via `reveal d1`…`d5` (added `.reveal.d4`/`.reveal.d5` to the shared reveal system — previously only went up to `d3`).
-- Removed the now-dead `.stats-bar`/`.stat`/counter CSS and the "Animated counters" `IntersectionObserver` block in `main.js` (`.num[data-count]` no longer exists anywhere) — don't reintroduce without checking nothing else references it.
+6-step animated connector: Requirement → Flow & Planning → UI/UX Design → Development → Integration & Testing → Delivered. Replaced the old stats bar entirely (Projects Built/Integrations Shipped/etc. — don't re-add it).
 
-## 10. Branding assets (done)
+- Desktop (≥900px): horizontal row of icon nodes connected by a line that draws in (red, over gray) on scroll. The line math relies on all 6 `.process-step` being equal-width flex children with no gap — first icon center sits at exactly 8.333% of the row width, last at 91.667%. **If the step count ever changes from 6, recalculate these percentages** (formula: first-center = 50%/n, last-center = 100% − 50%/n).
+- Mobile (<900px): flips to a vertical stepper (`padding-left:66px`, icons `position:absolute; left:-66px`, connector line at `left:26px`).
+- Each step fades up individually via `reveal d1`…`d5`.
 
-- **Favicon:** now the owner's real `images/vk-logo.jpg` (VK monogram), wired into all 4 pages as both `<link rel="icon">` and `<link rel="apple-touch-icon">`. Replaced the earlier placeholder `favicon.svg` (deleted — no longer referenced anywhere).
-- **Browser theme color:** `<meta name="theme-color" content="#0E1116">` + `msapplication-TileColor` added to all 4 pages, matching `--bg`. Chrome/Edge on Android and Safari on iOS will tint the address bar / status bar to match on browsers that support it — no visual effect on desktop browsers, that's expected, not a bug.
-- `images/og-image.svg` — 1200×630 social-share card (name, role, tag pills, signature `</>` mark). Source is done; still needs the PNG export (see TODO #2 above).
-- Open Graph + Twitter Card meta tags added to every page's `<head>` (page-specific `og:title`/`og:description`, shared `og:image`).
+## 10. Branding & SEO (done)
 
-## 11. SEO (on-page work done — see honest caveat below)
+- Favicon: `images/vk-logo.jpg` (VK monogram), wired as `<link rel="icon">` + `apple-touch-icon` on all pages.
+- `theme-color` (`#0E1116`) + `msapplication-TileColor` on all pages — tints mobile browser chrome where supported.
+- `robots`/`author` meta, `canonical` links, `og:url`, JSON-LD (`Person` on index.html, `BreadcrumbList` elsewhere), `robots.txt` + `sitemap.xml` — all assume domain `vkdeveloper900.github.io`.
+- **Honest note on SEO speed:** on-page SEO (done here) helps a site get indexed *correctly*, but ranking also depends on domain age, backlinks, and keyword competition — none of which a code change can fix quickly. Don't oversell "top 10 in N days" claims based on this work alone.
 
-Added to all 4 pages:
-- `<meta name="robots" content="index, follow">`, `<meta name="author">`
-- `<link rel="canonical">` pointing at `https://vkdeveloper900.github.io/...` (matches the deploy plan in §8 TODO #4 — **must be updated if you deploy under a different domain/repo name**, otherwise canonical tags will point at a URL that doesn't exist)
-- `og:url` matching the canonical
-- JSON-LD structured data: full `Person` schema on `index.html` (name, job title, employer, education, skills, social profiles); `BreadcrumbList` schema on the other 3 pages
+## 11. Hotlinked images fixed (owner's old portfolio repo got renamed)
 
-Also added at project root: `robots.txt` (allows all crawlers, points to sitemap) and `sitemap.xml` (all 4 pages, same domain caveat as canonical tags above).
+The original About photo and 4 project thumbnails were hotlinked to `https://vkdeveloper900.github.io/Portfolio/...`, which 404'd after that repo got renamed to `Portfolioold2021vinod`. All 5 are now local files instead of hotlinks — don't re-introduce hotlinks to any external repo for site assets.
 
-**Honest caveat on "top 10 in 1-2 days":** this isn't something on-page SEO can deliver, for reasons that have nothing to do with how well the HTML is marked up:
-- The site isn't deployed yet — Google can't rank a page it can't crawl. Indexing a brand-new site after deploy typically takes days to weeks, not hours.
-- Ranking also depends heavily on domain age, backlinks, and how competitive the target keywords are — a portfolio with zero backlinks and a same-day-old domain is very unlikely to outrank established Laravel-developer profiles/agencies for competitive terms in 1-2 days, no matter how clean the markup is.
-- What's done here (structured data, meta tags, sitemap, canonical, fast static loading, mobile-responsive, semantic headings) is the legitimate groundwork that helps a site get indexed correctly and rank *over time* — it's necessary, not sufficient, and not fast.
+## 12. About Me photo — must stay a transparent PNG, not JPG
 
-If the goal is fast visibility, the more realistic levers are: deploy soon so indexing clock starts, submit the sitemap in Google Search Console (triggers faster crawl than waiting passively), and share the live link on LinkedIn/GitHub/socials for early backlinks/traffic — none of which a code change can substitute for.
-
-## 12. Hotlinked images fixed (owner's old portfolio repo got renamed)
-
-The About Me photo and 4 project thumbnails were hotlinked to `https://vkdeveloper900.github.io/Portfolio/...`, which started 404ing because that repo got renamed to `Portfolioold2021vinod`. Rather than re-hotlink to the renamed repo (which could break again on any future rename/deletion), all 5 images were downloaded and now live locally:
-
-- `images/about-photo.jpg` — the About Me photo. **Had a real bug on the first pass**: the source JPEG carries EXIF orientation tag 8 (rotate 270° CW), and the initial resize (via .NET `System.Drawing`) copied pixels without applying that correction, so the saved file came out sideways. Fixed by calling `$img.RotateFlip([System.Drawing.RotateFlipType]::Rotate270FlipNone)` before resizing — final file is a correctly-oriented 900×1350 portrait. If this image is ever regenerated from a camera-original source, re-check EXIF orientation (tag ID 274) before resizing; don't assume `System.Drawing.Image.FromFile` bakes in EXIF rotation automatically — it doesn't.
-- `images/projects/{billing-web,paperselling,vw,sweet}.jpg` — project thumbnails, converted from PNG (originals were 3.5–7.2MB screenshots at ~3584px wide) down to ~900px-wide JPEGs at 27–60KB each. No EXIF issue on these (screenshots, not camera photos).
-- All `<img>` tags in `index.html` and `projects.html` updated from the dead hotlinked URLs to these local paths. The Person JSON-LD `image` field also updated to point at `about-photo.jpg` instead of the logo.
-- The 3 standalone "Live" project links (Paper-Selling-Website, Vishwakarma-Welding, sweetalert-showcase) are separate repos and still resolve fine (checked via HTTP status) — only the `Portfolio` repo's assets were affected by the rename.
+`images/about-photo.png` is a **real transparent PNG** (verified alpha=0 at the corners) — the `.about-photo` box's `background: var(--bg)` shows through around the person instead of a white box. **JPG cannot store transparency at all** — an earlier pass used a JPG export of a "background removed" photo and it silently got flattened to solid white on save, which is why there was a visible white box bug before this fix. If this photo is ever replaced, get a PNG (or WebP) with a real alpha channel, not a JPG — check corner-pixel alpha before trusting a "background removed" file's format claim.
 
 ## 13. Contact form autoresponse email template
 
-`email-templates/thank-you.html` — branded "thank you for reaching out" email sent to whoever submits the contact form. Built as proper **email-safe HTML**: table-based layout, every rule inlined, websafe font fallbacks (not a copy of `style.css` — modern CSS like grid/flexbox/custom properties doesn't render reliably in email clients, Outlook desktop especially, so don't "clean this up" to match the site's regular CSS).
+`email-templates/thank-you.html` — branded thank-you email, built as **email-safe HTML** (table-based, inlined rules, websafe fonts — not a copy of `style.css`, modern CSS doesn't render reliably in email clients).
 
-**Important limitation to know before wiring this up:** Formspree's **free plan cannot send a custom HTML autoresponse at all** — custom templates require the Business/Platinum plan. Even on a paid plan, personalizing with the submitter's name (`{{name}}`) additionally requires a **custom domain connected to the Formspree account** — without one, submitted field values aren't injected into the autoresponse, so the template defaults to a generic "Hey there 👋" greeting (the personalized version is commented inline in the file). The `{{_unsubscribe}}` tag near the footer is required by Formspree for any custom template regardless of plan.
+**Formspree limitation:** free plan cannot send a custom HTML autoresponse at all (Business/Platinum only); even then, personalizing with `{{name}}` requires a custom domain connected to the Formspree account. Two ways to actually use this template: paste into Formspree's custom template editor (paid plans), or switch to EmailJS (free tier, supports `{{name}}` without a custom domain, but needs its SDK wired into `main.js`'s submit handler instead of the current Formspree fetch).
 
-**Two ways to actually use it:**
-1. **Formspree (Business/Platinum):** Settings → Plugins → Autoresponse → Custom Template. Paste the `<body>` contents into their HTML tab (don't include the `<style>` block — Formspree wants CSS in a separate CSS tab and auto-inlines it).
-2. **EmailJS (free tier, supports `{{name}}` personalization without needing a custom domain):** paste the whole file as an EmailJS template, map `{{name}}` to the form's `name` field. Would need EmailJS's SDK wired into `contact.html`'s submit handler in `main.js` instead of (or alongside) the current Formspree fetch — not done yet, ask if you want this built.
+## 14. Project detail pages (project-detail.html)
 
-All four pages (`index.html`, `projects.html`, `experience.html`, `contact.html`) are now built and cross-linked.
+One reusable template instead of 7 separate HTML files. `js/projects-data.js` holds an array of project objects (`slug`, `title`, `category`, `description`, `tags`, `thumbnail`, `liveUrl`, `codeUrl`, `linkNote`, `detailContent` HTML string, `media[]`) — shape deliberately mirrors the admin backend's `Project` model (see §8 TODO #1).
+
+`main.js` reads `?slug=` from the URL, finds the matching project in the `PROJECTS` global, and renders it into the page (title, description, tags, links, thumbnail, case-study HTML, media gallery). Shows a "Project not found" state if the slug doesn't match anything. `projects.html` links every card's title + thumbnail to `project-detail.html?slug=...`.
+
+Case-study content (`detailContent`) for all 7 projects was written using only facts already established elsewhere on the site (tags, descriptions) — no invented metrics or fabricated outcomes.
+
+## 15. Skills grid — expanded, including AI tools with no icon library entry
+
+Added GitLab, Bitbucket, Android Studio, Cursor, Claude, Codex, Antigravity, Kiro. Icon sourcing notes:
+- GitLab/Bitbucket/Android Studio: devicon, full color, no `.invert` needed.
+- Cursor/Claude/Codex: Simple Icons — these are **monochrome black SVGs with no explicit fill**, so they need the `.invert` class (same treatment as the existing GitHub tile) or they're invisible on the dark background.
+- **Antigravity and Kiro have no entry in devicon or Simple Icons** (checked directly, both 404) — too new/niche. Real logos were pulled directly from the products' own sites instead: `kiro.dev`'s `/icon.svg` (their actual brand SVG) and `antigravity.google`'s `favicon.ico` (decoded from gzip, converted to PNG — only 48×48 available, that's the largest they publish). These are genuine brand assets, not placeholders — if a monogram/letter badge ever needs to come back for some other unreleased tool, that pattern still exists in git history (`.skill-monogram`, now removed since these two got real icons).
+
+## 16. Save Contact (vCard) button
+
+`vinod-suthar.vcf` at the project root — a real vCard (VCF 3.0) with name, org (**"VK Developer"**, not Adler — deliberate), title, phone, both emails, address, and an embedded base64 photo (`images/vcard-photo.jpg`, a small square crop, decoded/verified byte-for-byte against the source before committing). Long lines (the base64 photo) are properly folded per RFC 2426 (75-char lines, continuation lines start with a single space) — don't reformat this file by hand or a strict vCard parser may reject it.
+
+The "Save Contact" button lives on the Phone/WhatsApp card on `contact.html` (`.save-contact-btn`) — floats on the right side on desktop, stacks full-width below the card content on mobile (`max-width: 640px`). It's a plain `<a download>` link, no JS needed for the download itself.
+
+To regenerate the vCard after a data change, see the Node script pattern used to build it (reads the photo file, base64-encodes, folds the PHOTO line, writes the `.vcf` — not committed to the repo, rebuild inline if needed).
+
+---
+
+All 5 pages (`index.html`, `projects.html`, `project-detail.html`, `experience.html`, `contact.html`) are built, cross-linked, and live at https://vkdeveloper900.github.io/Portfolio/.
