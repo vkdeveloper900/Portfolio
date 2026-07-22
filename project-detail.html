@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Project | Vinod Suthar — Full Stack Laravel Developer</title>
+  <meta name="description" content="Case study — a project built by Vinod Suthar, Full Stack Laravel Developer.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Vinod Suthar">
+  <link rel="icon" type="image/jpeg" href="images/vk-logo.jpg">
+  <link rel="apple-touch-icon" href="images/vk-logo.jpg">
+  <meta name="theme-color" content="#0E1116">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">vinod<span>.</span>suthar</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- DETAIL CONTENT (populated by js/main.js from js/projects-data.js) -->
+  <section class="section" id="detailWrap" style="display:none;">
+    <div class="container">
+      <a href="projects.html" class="detail-back">← Back to Projects</a>
+
+      <p class="section-label" id="detailCategory">// project</p>
+      <h1 class="detail-title" id="detailTitle"></h1>
+      <p class="lead" id="detailDescription" style="max-width: 720px;"></p>
+
+      <div class="tag-row" id="detailTags" style="margin: 18px 0 24px;"></div>
+
+      <div class="project-links" id="detailLinks" style="margin-bottom: 32px;"></div>
+
+      <div class="detail-thumb" id="detailThumbWrap" style="display:none;">
+        <img id="detailThumb" src="" alt="" loading="lazy">
+      </div>
+
+      <div class="case-study" id="detailCaseStudy"></div>
+
+      <div class="detail-media-grid" id="detailMedia"></div>
+
+      <div class="center-cta reveal" style="margin-top: 56px;">
+        <a href="projects.html" class="btn btn-outline">All Projects →</a>
+        <a href="contact.html" class="btn btn-primary">Have a project in mind? →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOT FOUND STATE -->
+  <section class="section" id="notFoundWrap" style="display:none;">
+    <div class="container" style="text-align:center;">
+      <p class="section-label">// 404</p>
+      <h1 class="page-title" style="margin-bottom: 16px;">Project not found</h1>
+      <p class="lead" style="margin: 0 auto 28px;">This project link doesn't match anything — it may have moved or the URL is wrong.</p>
+      <a href="projects.html" class="btn btn-primary">Back to Projects →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <p class="brand">vinod<span>.</span>suthar</p>
+          <p>Thank you for visiting my portfolio. I build scalable Laravel applications, REST APIs and business automation systems. Keep Rising 🚀</p>
+          <div class="footer-socials">
+            <a href="https://github.com/vkdeveloper900" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/vinod-suthar-30b8a1298/" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://instagram.com/vksuthar_" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/VKSUTHAR900" target="_blank" rel="noopener" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://wa.me/917568293812" target="_blank" rel="noopener" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:vksuthar900@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact Info</h4>
+          <ul class="footer-contact">
+            <li><span>📞</span><span>+91 75682 93812</span></li>
+            <li><span>✉️</span><span>vksuthar900@gmail.com</span></li>
+            <li><span>📍</span><span>Ahmedabad, Gujarat, India</span></li>
+            <li><span>🏡</span><span>Sadri, Pali, Rajasthan — 306702</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 · Designed with <span class="heart">❤</span> by VKDEVELOPER · All rights reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+  <script src="js/projects-data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

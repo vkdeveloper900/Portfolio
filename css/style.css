@@ -492,6 +492,8 @@ ul { list-style: none; }
 .project-card:hover .project-thumb img { transform: scale(1.05); }
 .project-body { padding: 22px 24px; flex: 1; display: flex; flex-direction: column; }
 .project-body h3 { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 8px; }
+.project-body h3 a { color: var(--text); transition: color 0.2s; }
+.project-body h3 a:hover { color: var(--accent); }
 .project-body p { color: var(--muted); font-size: 0.9rem; flex: 1; }
 .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
 .project-links { display: flex; gap: 14px; }
@@ -501,6 +503,54 @@ ul { list-style: none; }
 }
 .project-links a:hover { opacity: 0.75; }
 .center-cta { text-align: center; margin-top: 44px; }
+
+/* ---------- PROJECT DETAIL PAGE ---------- */
+.detail-back {
+  display: inline-block;
+  font-family: var(--font-mono); font-size: 0.85rem;
+  color: var(--muted); margin-bottom: 24px;
+  transition: color 0.2s;
+}
+.detail-back:hover { color: var(--accent); }
+
+.detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700; margin: 12px 0 16px;
+}
+
+.detail-thumb {
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  margin-bottom: 40px;
+}
+.detail-thumb img { width: 100%; display: block; }
+
+.case-study { max-width: 760px; }
+.case-study h3 {
+  font-family: var(--font-display); font-size: 1.25rem;
+  margin: 32px 0 12px;
+}
+.case-study h3:first-child { margin-top: 0; }
+.case-study p { color: var(--muted); margin-bottom: 14px; }
+.case-study code {
+  font-family: var(--font-mono); font-size: 0.9em;
+  color: var(--blue); background: var(--surface-2);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+.detail-media-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.detail-media-item {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--border);
+  aspect-ratio: 16/9;
+}
+.detail-media-item img { width: 100%; height: 100%; object-fit: cover; }
+.detail-media-item iframe { width: 100%; height: 100%; border: 0; }
 
 /* ---------- TIMELINE (Experience + Education) ---------- */
 .timeline { position: relative; padding-left: 28px; }

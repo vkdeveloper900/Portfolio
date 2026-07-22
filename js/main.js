@@ -153,6 +153,66 @@ if (contactForm) {
   }
 }
 
+// ---- Project detail page (reads ?slug= from js/projects-data.js) ----
+const detailWrap = document.getElementById('detailWrap');
+if (detailWrap && typeof PROJECTS !== 'undefined') {
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('slug');
+  const project = PROJECTS.find(function (p) { return p.slug === slug; });
+
+  if (project) {
+    document.title = project.title + ' | Vinod Suthar — Full Stack Laravel Developer';
+    document.getElementById('detailCategory').textContent = '// ' + (project.category === 'laravel' ? 'laravel project' : 'frontend project');
+    document.getElementById('detailTitle').textContent = project.title;
+    document.getElementById('detailDescription').textContent = project.description;
+
+    const tagsEl = document.getElementById('detailTags');
+    project.tags.forEach(function (tag) {
+      const span = document.createElement('span');
+      span.className = 'tag';
+      span.textContent = tag;
+      tagsEl.appendChild(span);
+    });
+
+    const linksEl = document.getElementById('detailLinks');
+    if (project.liveUrl) {
+      linksEl.innerHTML += '<a href="' + project.liveUrl + '" target="_blank" rel="noopener">Live ↗</a>';
+    }
+    if (project.codeUrl) {
+      linksEl.innerHTML += '<a href="' + project.codeUrl + '" target="_blank" rel="noopener">Code ↗</a>';
+    }
+    if (project.linkNote) {
+      linksEl.innerHTML += '<span style="color: var(--muted); font-size: 0.9rem;">' + project.linkNote + '</span>';
+    }
+
+    if (project.thumbnail) {
+      document.getElementById('detailThumb').src = project.thumbnail;
+      document.getElementById('detailThumb').alt = project.title + ' screenshot';
+      document.getElementById('detailThumbWrap').style.display = 'block';
+    }
+
+    document.getElementById('detailCaseStudy').innerHTML = project.detailContent;
+
+    if (project.media && project.media.length) {
+      const mediaEl = document.getElementById('detailMedia');
+      project.media.forEach(function (item) {
+        const wrap = document.createElement('div');
+        wrap.className = 'detail-media-item';
+        if (item.type === 'video') {
+          wrap.innerHTML = '<iframe src="' + item.url + '" loading="lazy" allowfullscreen></iframe>';
+        } else {
+          wrap.innerHTML = '<img src="' + item.url + '" alt="' + (item.alt || project.title) + '" loading="lazy">';
+        }
+        mediaEl.appendChild(wrap);
+      });
+    }
+
+    detailWrap.style.display = 'block';
+  } else {
+    document.getElementById('notFoundWrap').style.display = 'block';
+  }
+}
+
 // ---- Back to top ----
 const toTop = document.getElementById('toTop');
 if (toTop) {
