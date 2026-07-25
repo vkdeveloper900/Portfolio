@@ -13,7 +13,7 @@
 - **Positioning:** "Laravel Developer specializing in APIs & Integrations (Payments, SMS/OTP, Microsoft 365)"
 - **Tech:** Pure HTML + CSS + Vanilla JS (NO frameworks, NO build step)
 - **Hosting:** GitHub Pages — **live at https://vkdeveloper900.github.io/Portfolio/**
-- **Sibling project:** `D:\Vinod_Suthar\Projects\Portfolio_Backend` — a Laravel admin panel (Projects, Project Categories, Experience, Leads/contact submissions) that exists and works standalone, but **is not yet wired up to this frontend** — see §8 TODO #2. Editing content in the admin panel currently has no effect on the live site.
+- **Sibling project:** `../Portfolio_Backend_Laravel` — a Laravel admin panel + public API (Projects, Project Categories, Experience, Leads/contact submissions), live at **https://vinodsuthar.alwaysdata.net**. **This frontend is fully wired to it** — projects, project filter tabs, experience, and the contact form all read/write through the real API (`js/config.js` picks the right base URL by hostname). Editing content in the admin panel now directly controls the live site.
 
 ---
 
@@ -21,27 +21,30 @@
 
 ```
 portfolio/
-├── index.html            ✅ Home — hero, process flow, about, skills, specializations, featured projects, experience preview, contact strip
-├── projects.html         ✅ Full projects grid, filterable, links to project-detail.html
-├── project-detail.html   ✅ Single reusable template — reads ?slug= and renders from js/projects-data.js
-├── experience.html       ✅ Full work + education timeline
-├── contact.html          ✅ Contact cards + Save Contact vCard button + AJAX Formspree form
+├── index.html            ✅ Home — hero, process flow, about, skills, specializations, featured projects (API, top 2), experience preview (API, top 2), contact strip
+├── projects.html         ✅ Full projects grid (API-driven) + dynamic filter tabs (from GET /api/project-categories), links to project-detail.html
+├── project-detail.html   ✅ Single reusable template — reads ?slug= and fetches GET /api/projects/{slug}
+├── experience.html       ✅ Experience column is API-driven (GET /api/experience); Education column stays static HTML by design
+├── contact.html          ✅ Contact cards + Save Contact vCard button + AJAX form posting to the Laravel backend's POST /api/contact
+├── privacy-policy.html   ✅ Plain-language privacy policy, linked from every footer
+├── 404.html              ✅ Custom space-themed 404 (GitHub Pages auto-serves this for unmatched paths) — same design as the backend's Blade 404 view
 ├── css/
 │   └── style.css         ✅ Single shared stylesheet — ALL pages use this
 ├── js/
-│   ├── main.js            ✅ Shared JS — nav, typing, reveal, process flow, filter tabs, contact form, project-detail rendering, theme bits, to-top
-│   └── projects-data.js   ✅ Single source of truth for all project content (see §14) — shape mirrors the admin backend's Project model on purpose
+│   ├── config.js          ✅ API_BASE_URL — switches between local (127.0.0.1:8000) and production (vinodsuthar.alwaysdata.net) by hostname. Must be loaded before main.js.
+│   ├── main.js            ✅ Shared JS — nav, typing, reveal, process flow, dynamic filter tabs, project grid fetch, experience timeline fetch, contact form, project-detail rendering, theme bits, to-top
+│   └── projects-data.js   ⚠️ LEGACY, no longer loaded by any page — superseded by the live API. Kept only as historical reference; safe to delete whenever, just isn't wired to anything.
 ├── images/
 │   ├── about-photo.png    ✅ Transparent PNG headshot (see §12 — do not swap back to JPG, JPG can't hold transparency)
 │   ├── vk-logo.jpg        ✅ Favicon + apple-touch-icon on all pages
 │   ├── vcard-photo.jpg    ✅ Small square photo embedded (base64) in vinod-suthar.vcf
 │   ├── og-image.svg       ⏳ Social-share image source — still needs PNG export, see TODO
 │   ├── antigravity.png, kiro.svg  ✅ Real brand logos pulled directly from the products' own sites (see §15)
-│   └── projects/          ✅ Local project thumbnails
+│   └── projects/          ✅ Local project thumbnails (legacy — new projects upload thumbnails through the admin panel instead, stored on the backend)
 ├── vinod-suthar.vcf      ✅ Downloadable vCard (see §16)
 ├── robots.txt / sitemap.xml  ✅ Both point at vkdeveloper900.github.io — update if ever deployed elsewhere
 └── email-templates/
-    └── thank-you.html    ✅ Contact-form autoresponse email template, see §13
+    └── thank-you.html    ⚠️ LEGACY — the real contact-form emails are now sent by the Laravel backend (`resources/views/emails/*.blade.php`), which was originally adapted from this file. This copy no longer sends anything; kept for reference only.
 ```
 
 **Rule:** One shared `css/style.css` and `js/main.js` for ALL pages. Never create per-page CSS/JS files. Reuse existing classes before adding new ones.
@@ -115,9 +118,11 @@ Hero has a **JSON API response card** (`GET /api/developer/vinod-suthar → 200 
 - `#hamburger` + `#navLinks` → mobile menu
 - `#typeText` → typing effect (roles array)
 - `.reveal` → IntersectionObserver fade-up
-- `.filter-tab` / `[data-filter-item]` → project category filtering
-- `#contactForm` → AJAX Formspree submit with success/error panels
-- `#detailWrap` + `PROJECTS` global → project-detail.html rendering (see §14)
+- `#filterTabs` → fetches `GET /api/project-categories`, appends a `.filter-tab` per category next to the static "All" tab, then wires up `[data-filter-item]` filtering
+- `.project-grid` → fetches `GET /api/projects`, renders cards (`data-limit` attribute caps how many, used on index.html's featured section)
+- `.experience-timeline` → fetches `GET /api/experience`, renders timeline items (`data-limit` attribute caps how many, used on index.html's preview)
+- `#contactForm` → AJAX POST to the Laravel backend (`API_BASE_URL + '/contact'`) with success/error panels
+- `#detailWrap` → fetches `GET /api/projects/{slug}` (from `?slug=` in the URL) and renders the project-detail.html page (see §14)
 - `#toTop` → back-to-top button
 
 ---
@@ -128,16 +133,22 @@ Hero has a **JSON API response card** (`GET /api/developer/vinod-suthar → 200 
 Navbar → Hero (typing + JSON card + socials) → "How I Build" process flow (§9) → About (photo + bio, Adler Talent Solutions linked to adlertalent.com) → Skills (§15 — expanded tile set) → Specializations (3 cards) → Featured Projects (3 cards, link to project-detail.html) → Experience/Education preview → Contact strip → Footer.
 
 ### 5.2 projects.html ✅
-Filter tabs (All/Laravel/Frontend) + full project grid. Every card's **title and thumbnail now link to `project-detail.html?slug=...`** (§14); cards with no public live/code link show a "Details →" action instead of nothing.
+Filter tabs — "All" is static, every category tab is fetched live from `GET /api/project-categories` (a new category created in the admin panel shows up here with zero frontend changes) — + full project grid fetched from `GET /api/projects`. Every card's **title and thumbnail link to `project-detail.html?slug=...`** (§14); cards with no public live/code link show a "Details →" action instead of nothing. Card descriptions are CSS line-clamped to 3 lines (`.case-study`/`.project-body p` — full text still shows on the detail page).
 
-### 5.3 project-detail.html ✅ (new)
-Single reusable template, not 7 separate files — see §14 for how it works.
+### 5.3 project-detail.html ✅
+Single reusable template, not one file per project — fetches `GET /api/projects/{slug}` and renders into the page (see §14).
 
 ### 5.4 experience.html ✅
-Full work + education timeline. "Adler Talent Solutions Pvt. Ltd." is linked to `https://adlertalent.com/` in both places it appears (here and on index.html).
+Experience column fetches `GET /api/experience` and renders live; Education column is static HTML by explicit design choice (no `education` concept exists in the backend — don't add one without asking, see the project's memory notes on this). "Adler Talent Solutions Pvt. Ltd." renders as a link (via the entry's `organizationUrl` field) wherever an experience entry has one set.
 
 ### 5.5 contact.html ✅
-Contact cards (phone/WhatsApp with Save Contact button, email ×3, location) + AJAX Formspree form with animated success/error panels. **Formspree form ID is real and live** (`xvzerqpw`) — not a placeholder, already tested working.
+Contact cards (phone/WhatsApp with Save Contact button, email ×3, location) + AJAX form posting to `API_BASE_URL + '/contact'` (the Laravel backend) with animated success/error panels. Real emails go out via Gmail SMTP — a thank-you to the submitter, a lead notification to the site owner, both styled to match the site (dark, JSON-card motif). Admin can also reply to a lead from the admin panel; the reply threads into the same email conversation.
+
+### 5.6 privacy-policy.html ✅
+Static page using the `.case-study` prose class. Plain-language explanation of what the contact form collects and that it's never sold/shared — linked from every page's footer.
+
+### 5.7 404.html ✅
+Static, at the repo root. GitHub Pages auto-serves it for any unmatched URL — no routing config needed, purely by filename convention. Same space/astronaut animation as the backend's Blade 404 view, with the admin login/dashboard buttons swapped for "Back Home"/"Go Back".
 
 ---
 
@@ -172,9 +183,10 @@ Contact cards (phone/WhatsApp with Save Contact button, email ×3, location) + A
 
 ## 8. Pending TODO (priority order)
 
-1. **Connect the admin panel backend to make content dynamic** — the biggest real gap right now. `Portfolio_Backend` (Laravel, at `D:\Vinod_Suthar\Projects\Portfolio_Backend`) already has working CRUD for Projects, Project Categories, and Experience, but this frontend still reads from a **hardcoded** `js/projects-data.js`. To actually make the admin panel control the live site: deploy the backend somewhere reachable (it currently only runs locally), build a public read-only API endpoint (e.g. `GET /api/projects`, `GET /api/experience`), and change `project-detail.html`/`projects.html`/`experience.html` to `fetch()` from that API instead of the static JS file. `js/projects-data.js` was deliberately shaped to match the backend's `Project` model precisely so this swap is mostly "change where the data comes from," not a rewrite of the rendering logic.
+1. **Add real projects via the admin panel** (`admin/projects` on the live backend) and mark them **Live** — the live production DB has zero projects in it as of this writing, so `projects.html`/index.html's featured grid render empty until content is entered. Draft content for the "Vishwakarma Welding" project already exists (case study, meta, tags) from an earlier session — just needs entering.
 2. **Export `images/og-image.svg` to `images/og-image.png` (1200×630)** — any SVG-to-PNG converter works. All pages already reference the PNG in `og:image`/`twitter:image`, so social previews (WhatsApp/LinkedIn/Slack) show a broken image until this exists.
-3. Real screenshots for the 2 project thumbnails still showing `[ screenshot ]` placeholders (Inventory Management System, HRMS Platform, Snap Spirit).
+3. **No admin password-reset flow** — if the admin login password is ever lost, there's currently no self-service recovery (backend gap, not a frontend one, but tracked here since it blocks live-site maintenance).
+4. Delete or ignore the now-dead `js/projects-data.js` and `email-templates/thank-you.html` — both superseded by the live API/backend mail, kept only as historical reference (see §2).
 
 ---
 
@@ -201,19 +213,15 @@ The original About photo and 4 project thumbnails were hotlinked to `https://vkd
 
 `images/about-photo.png` is a **real transparent PNG** (verified alpha=0 at the corners) — the `.about-photo` box's `background: var(--bg)` shows through around the person instead of a white box. **JPG cannot store transparency at all** — an earlier pass used a JPG export of a "background removed" photo and it silently got flattened to solid white on save, which is why there was a visible white box bug before this fix. If this photo is ever replaced, get a PNG (or WebP) with a real alpha channel, not a JPG — check corner-pixel alpha before trusting a "background removed" file's format claim.
 
-## 13. Contact form autoresponse email template
+## 13. Contact form emails — now sent by the Laravel backend, not this repo
 
-`email-templates/thank-you.html` — branded thank-you email, built as **email-safe HTML** (table-based, inlined rules, websafe fonts — not a copy of `style.css`, modern CSS doesn't render reliably in email clients).
-
-**Formspree limitation:** free plan cannot send a custom HTML autoresponse at all (Business/Platinum only); even then, personalizing with `{{name}}` requires a custom domain connected to the Formspree account. Two ways to actually use this template: paste into Formspree's custom template editor (paid plans), or switch to EmailJS (free tier, supports `{{name}}` without a custom domain, but needs its SDK wired into `main.js`'s submit handler instead of the current Formspree fetch).
+`email-templates/thank-you.html` (this repo) is **legacy** — it was the original design reference, but no longer sends anything. The real thank-you email, the lead-notification email, and the admin-reply email are now Blade mail views living in `Portfolio_Backend_Laravel` (`resources/views/emails/*.blade.php`), sent via real Gmail SMTP when `POST /api/contact` is hit. All three keep the same email-safe HTML approach (table-based, inlined styles, websafe fonts) and the same dark/JSON-card branding as this file originally established.
 
 ## 14. Project detail pages (project-detail.html)
 
-One reusable template instead of 7 separate HTML files. `js/projects-data.js` holds an array of project objects (`slug`, `title`, `category`, `description`, `tags`, `thumbnail`, `liveUrl`, `codeUrl`, `linkNote`, `detailContent` HTML string, `media[]`) — shape deliberately mirrors the admin backend's `Project` model (see §8 TODO #1).
+One reusable template instead of one file per project. `js/projects-data.js` is now **dead code** (see §2, §8) — `main.js` instead reads `?slug=` from the URL and fetches `GET /api/projects/{slug}` from the live backend, rendering the response (title, description, tags, links, thumbnail, case-study HTML from `detailContent`, media gallery). Shows a "Project not found" state if the fetch 404s. `projects.html` links every card's title + thumbnail to `project-detail.html?slug=...`.
 
-`main.js` reads `?slug=` from the URL, finds the matching project in the `PROJECTS` global, and renders it into the page (title, description, tags, links, thumbnail, case-study HTML, media gallery). Shows a "Project not found" state if the slug doesn't match anything. `projects.html` links every card's title + thumbnail to `project-detail.html?slug=...`.
-
-Case-study content (`detailContent`) for all 7 projects was written using only facts already established elsewhere on the site (tags, descriptions) — no invented metrics or fabricated outcomes.
+The API response shape still mirrors what `js/projects-data.js` used to hardcode (`slug`, `title`, `category`, `description`, `tags`, `thumbnail`, `liveUrl`, `codeUrl`, `linkNote`, `detailContent`, `media[]`) — that was intentional groundwork from before the API existed, and it paid off: switching the data source required no changes to the rendering logic.
 
 ## 15. Skills grid — expanded, including AI tools with no icon library entry
 
@@ -232,4 +240,4 @@ To regenerate the vCard after a data change, see the Node script pattern used to
 
 ---
 
-All 5 pages (`index.html`, `projects.html`, `project-detail.html`, `experience.html`, `contact.html`) are built, cross-linked, and live at https://vkdeveloper900.github.io/Portfolio/.
+All 7 pages (`index.html`, `projects.html`, `project-detail.html`, `experience.html`, `contact.html`, `privacy-policy.html`, `404.html`) are built, cross-linked, wired to the live Laravel backend, and live at https://vkdeveloper900.github.io/Portfolio/. Backend is live at https://vinodsuthar.alwaysdata.net.
