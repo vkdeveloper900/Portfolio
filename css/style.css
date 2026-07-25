@@ -542,6 +542,8 @@ ul { list-style: none; }
 }
 .case-study h3:first-child { margin-top: 0; }
 .case-study p { color: var(--muted); margin-bottom: 14px; }
+.case-study ul { margin: 0 0 14px; padding-left: 20px; }
+.case-study ul li { list-style: disc; color: var(--muted); margin-bottom: 6px; }
 .case-study code {
   font-family: var(--font-mono); font-size: 0.9em;
   color: var(--blue); background: var(--surface-2);
