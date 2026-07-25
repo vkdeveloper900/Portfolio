@@ -80,13 +80,15 @@ function observeReveal(el) {
 document.querySelectorAll('.reveal').forEach(observeReveal);
 
 // ---- Project filter tabs ----
-// Items are queried fresh on each click since the project grid on
-// projects.html is populated asynchronously after this script runs.
-const filterTabs = document.querySelectorAll('.filter-tab');
-if (filterTabs.length) {
-  filterTabs.forEach(function (tab) {
+// The "All" tab is static HTML; category tabs are fetched from the API so
+// a newly created category shows up here without touching this file.
+const filterTabsWrap = document.getElementById('filterTabs');
+
+function bindFilterTabs() {
+  const tabs = filterTabsWrap.querySelectorAll('.filter-tab');
+  tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
-      filterTabs.forEach(function (t) { t.classList.remove('active'); });
+      tabs.forEach(function (t) { t.classList.remove('active'); });
       tab.classList.add('active');
       const filter = tab.getAttribute('data-filter');
       document.querySelectorAll('[data-filter-item]').forEach(function (item) {
@@ -95,6 +97,27 @@ if (filterTabs.length) {
       });
     });
   });
+}
+
+if (filterTabsWrap && typeof API_BASE_URL !== 'undefined') {
+  fetch(API_BASE_URL + '/project-categories')
+    .then(function (res) { return res.ok ? res.json() : Promise.reject(res.status); })
+    .then(function (payload) {
+      const categories = payload.data || [];
+      categories.forEach(function (category) {
+        const tab = document.createElement('button');
+        tab.className = 'filter-tab';
+        tab.setAttribute('data-filter', category.slug);
+        tab.textContent = category.name;
+        filterTabsWrap.appendChild(tab);
+      });
+      bindFilterTabs();
+    })
+    .catch(function () {
+      bindFilterTabs();
+    });
+} else if (filterTabsWrap) {
+  bindFilterTabs();
 }
 
 // ---- Project grids (index.html "Featured Projects" + projects.html full listing) ----
