@@ -494,7 +494,15 @@ ul { list-style: none; }
 .project-body h3 { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 8px; }
 .project-body h3 a { color: var(--text); transition: color 0.2s; }
 .project-body h3 a:hover { color: var(--accent); }
-.project-body p { color: var(--muted); font-size: 0.9rem; flex: 1; }
+.project-body p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
 .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
 .project-links { display: flex; gap: 14px; }
 .project-links a {
