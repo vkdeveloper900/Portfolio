@@ -382,49 +382,8 @@
         <p class="section-label">// selected work</p>
         <h2>Featured Projects</h2>
       </div>
-      <div class="project-grid">
-        <article class="project-card reveal">
-          <div class="project-thumb"><span>[ screenshot ]</span></div>
-          <div class="project-body">
-            <h3>Inventory Management System</h3>
-            <p>Stock &amp; product management with GST invoice generation, role-permission control and AJAX-based operations.</p>
-            <div class="tag-row">
-              <span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">AJAX</span>
-            </div>
-            <div class="project-links">
-              <a href="https://business.adoisstudio.com/admin/login" target="_blank" rel="noopener">Live ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal d1">
-          <div class="project-thumb"><span>[ screenshot ]</span></div>
-          <div class="project-body">
-            <h3>HRMS Platform</h3>
-            <p>HR management system with role &amp; permission management, REST APIs and Outlook Calendar meeting automation.</p>
-            <div class="tag-row">
-              <span class="tag">Laravel</span><span class="tag">REST API</span><span class="tag">MS 365</span>
-            </div>
-            <div class="project-links">
-              <a href="projects.html">Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal d2">
-          <div class="project-thumb"><span>[ screenshot ]</span></div>
-          <div class="project-body">
-            <h3>Billing System</h3>
-            <p>Laravel-based system for electronic shops — inventory tracking, invoice printing and sales reports.</p>
-            <div class="tag-row">
-              <span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Bootstrap</span>
-            </div>
-            <div class="project-links">
-              <a href="projects.html">Details →</a>
-            </div>
-          </div>
-        </article>
-      </div>
+      <!-- Cards are rendered by js/main.js from GET /api/projects (first 3) -->
+      <div class="project-grid" data-limit="3"></div>
       <div class="center-cta reveal">
         <a href="projects.html" class="btn btn-outline">All Projects →</a>
       </div>
@@ -441,33 +400,7 @@
       <div class="two-col">
         <div class="reveal">
           <h3 class="col-title">💼 Experience</h3>
-          <div class="timeline">
-            <div class="t-item">
-              <p class="t-date">Aug 2025 — Present</p>
-              <h3>Laravel Developer</h3>
-              <p class="t-org"><a href="https://adlertalent.com/" target="_blank" rel="noopener">Adler Talent Solutions Pvt. Ltd.</a> · Ahmedabad</p>
-              <ul>
-                <li>HRMS system with role &amp; permission management</li>
-                <li>REST APIs for frontend &amp; third-party integrations</li>
-                <li>MySQL database design &amp; optimization</li>
-              </ul>
-            </div>
-            <div class="t-item">
-              <p class="t-date">Oct 2024 — Jul 2025</p>
-              <h3>Laravel Developer — Apprenticeship</h3>
-              <p class="t-org">ADOIS Games (Adois Studio) · Ahmedabad</p>
-              <ul>
-                <li>Dynamic Laravel web applications &amp; REST APIs</li>
-                <li>Authentication &amp; authorization modules</li>
-                <li>Query optimization for performance</li>
-              </ul>
-            </div>
-            <div class="t-item">
-              <p class="t-date">2022</p>
-              <h3>Early Roles</h3>
-              <p class="t-org">Computer Operator (Gov. Municipal Board) · Surveyor (Oasis Softapp) · Data Entry</p>
-            </div>
-          </div>
+          <div class="timeline experience-timeline" data-limit="2"></div>
         </div>
         <div class="reveal d1">
           <h3 class="col-title">🎓 Education</h3>
@@ -552,6 +485,7 @@
 
   <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
+  <script src="js/config.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

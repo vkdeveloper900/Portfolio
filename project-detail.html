@@ -4,12 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="pageTitle">Project | Vinod Suthar — Full Stack Laravel Developer</title>
-  <meta name="description" content="Case study — a project built by Vinod Suthar, Full Stack Laravel Developer.">
+  <meta name="description" id="metaDescription" content="Case study — a project built by Vinod Suthar, Full Stack Laravel Developer.">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Vinod Suthar">
+  <!-- update this domain if you deploy to somewhere other than vkdeveloper900.github.io -->
+  <link rel="canonical" href="https://vkdeveloper900.github.io/project-detail.html" id="canonicalLink">
   <link rel="icon" type="image/jpeg" href="images/vk-logo.jpg">
   <link rel="apple-touch-icon" href="images/vk-logo.jpg">
   <meta name="theme-color" content="#0E1116">
+  <meta name="msapplication-TileColor" content="#0E1116">
+  <meta property="og:type" content="article" id="ogType">
+  <meta property="og:url" content="https://vkdeveloper900.github.io/project-detail.html" id="ogUrl">
+  <meta property="og:title" content="Project | Vinod Suthar — Full Stack Laravel Developer" id="ogTitle">
+  <meta property="og:description" content="Case study — a project built by Vinod Suthar, Full Stack Laravel Developer." id="ogDescription">
+  <meta property="og:image" content="images/og-image.png" id="ogImage">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Project | Vinod Suthar — Full Stack Laravel Developer" id="twitterTitle">
+  <meta name="twitter:description" content="Case study — a project built by Vinod Suthar, Full Stack Laravel Developer." id="twitterDescription">
+  <meta name="twitter:image" content="images/og-image.png" id="twitterImage">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -36,7 +48,7 @@
     </div>
   </nav>
 
-  <!-- DETAIL CONTENT (populated by js/main.js from js/projects-data.js) -->
+  <!-- DETAIL CONTENT (populated by js/main.js from the public API) -->
   <section class="section" id="detailWrap" style="display:none;">
     <div class="container">
       <a href="projects.html" class="detail-back">← Back to Projects</a>
@@ -119,7 +131,7 @@
 
   <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
-  <script src="js/projects-data.js"></script>
+  <script src="js/config.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

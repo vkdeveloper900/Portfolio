@@ -74,113 +74,8 @@
         <button class="filter-tab" data-filter="frontend">Frontend</button>
       </div>
 
-      <div class="project-grid">
-        <article class="project-card reveal" data-filter-item="laravel">
-          <a href="project-detail.html?slug=inventory-management-system" class="project-thumb"><span>[ screenshot ]</span></a>
-          <div class="project-body">
-            <h3><a href="project-detail.html?slug=inventory-management-system">Inventory Management System</a></h3>
-            <p>Stock &amp; product management with GST invoice generation, role-permission control and AJAX-based operations.</p>
-            <div class="tag-row">
-              <span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">AJAX</span>
-            </div>
-            <div class="project-links">
-              <a href="project-detail.html?slug=inventory-management-system">Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal d1" data-filter-item="laravel">
-          <a href="project-detail.html?slug=hrms-platform" class="project-thumb"><span>[ screenshot ]</span></a>
-          <div class="project-body">
-            <h3><a href="project-detail.html?slug=hrms-platform">HRMS Platform</a></h3>
-            <p>HR management system with role &amp; permission management, REST APIs and Outlook Calendar meeting automation.</p>
-            <div class="tag-row">
-              <span class="tag">Laravel</span><span class="tag">REST API</span><span class="tag">MS 365</span>
-            </div>
-            <div class="project-links">
-              <a href="project-detail.html?slug=hrms-platform">Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal d2" data-filter-item="laravel">
-          <a href="project-detail.html?slug=billing-system" class="project-thumb">
-            <img src="images/projects/billing-web.jpg" alt="Billing System screenshot" loading="lazy">
-          </a>
-          <div class="project-body">
-            <h3><a href="project-detail.html?slug=billing-system">Billing System</a></h3>
-            <p>Laravel-based system for electronic shops — inventory tracking, invoice printing and sales reports.</p>
-            <div class="tag-row">
-              <span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Bootstrap</span>
-            </div>
-            <div class="project-links">
-              <a href="project-detail.html?slug=billing-system">Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-filter-item="laravel">
-          <a href="project-detail.html?slug=snap-spirit-photographer-studio" class="project-thumb"><span>[ screenshot ]</span></a>
-          <div class="project-body">
-            <h3><a href="project-detail.html?slug=snap-spirit-photographer-studio">Snap Spirit — Photographer Studio</a></h3>
-            <p>Studio showcase site with a gallery CMS for a professional photography business.</p>
-            <div class="tag-row">
-              <span class="tag">Laravel</span><span class="tag">Bootstrap</span>
-            </div>
-            <div class="project-links">
-              <a href="project-detail.html?slug=snap-spirit-photographer-studio">Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal d1" data-filter-item="frontend">
-          <a href="project-detail.html?slug=paper-selling-website" class="project-thumb">
-            <img src="images/projects/paperselling.jpg" alt="Paper Selling Website screenshot" loading="lazy">
-          </a>
-          <div class="project-body">
-            <h3><a href="project-detail.html?slug=paper-selling-website">Paper Selling Website</a></h3>
-            <p>Exam-paper platform with categories, search and an admin panel.</p>
-            <div class="tag-row">
-              <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">PHP</span>
-            </div>
-            <div class="project-links">
-              <a href="project-detail.html?slug=paper-selling-website">Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal d2" data-filter-item="frontend">
-          <a href="project-detail.html?slug=vw-vishwakarma-welding" class="project-thumb">
-            <img src="images/projects/vw.jpg" alt="Vishwakarma Welding website screenshot" loading="lazy">
-          </a>
-          <div class="project-body">
-            <h3><a href="project-detail.html?slug=vw-vishwakarma-welding">VW — Vishwakarma Welding</a></h3>
-            <p>Responsive business website for a welding services company.</p>
-            <div class="tag-row">
-              <span class="tag">HTML</span><span class="tag">Bootstrap</span>
-            </div>
-            <div class="project-links">
-              <a href="project-detail.html?slug=vw-vishwakarma-welding">Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-filter-item="frontend">
-          <a href="project-detail.html?slug=sweetalert-showcase" class="project-thumb">
-            <img src="images/projects/sweet.jpg" alt="SweetAlert Showcase screenshot" loading="lazy">
-          </a>
-          <div class="project-body">
-            <h3><a href="project-detail.html?slug=sweetalert-showcase">SweetAlert Showcase</a></h3>
-            <p>Interactive alert &amp; modal demos built with SweetAlert.</p>
-            <div class="tag-row">
-              <span class="tag">JS</span><span class="tag">SweetAlert</span>
-            </div>
-            <div class="project-links">
-              <a href="project-detail.html?slug=sweetalert-showcase">Details →</a>
-            </div>
-          </div>
-        </article>
-      </div>
+      <!-- Cards are rendered by js/main.js from GET /api/projects -->
+      <div class="project-grid"></div>
 
       <div class="center-cta reveal">
         <a href="contact.html" class="btn btn-primary">Have a project in mind? →</a>
@@ -233,6 +128,7 @@
 
   <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
+  <script src="js/config.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
