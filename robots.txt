@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vkdeveloper900.github.io/sitemap.xml
+Sitemap: https://vkdeveloper900.github.io/Portfolio/sitemap.xml
