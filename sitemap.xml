@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
-    <loc>https://vkdeveloper900.github.io/</loc>
-    <lastmod>2026-07-20</lastmod>
+    <loc>https://vkdeveloper900.github.io/Portfolio/</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+
   <url>
-    <loc>https://vkdeveloper900.github.io/projects.html</loc>
-    <lastmod>2026-07-20</lastmod>
+    <loc>https://vkdeveloper900.github.io/Portfolio/projects.html</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
-    <loc>https://vkdeveloper900.github.io/experience.html</loc>
-    <lastmod>2026-07-20</lastmod>
+    <loc>https://vkdeveloper900.github.io/Portfolio/experience.html</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+
   <url>
-    <loc>https://vkdeveloper900.github.io/contact.html</loc>
-    <lastmod>2026-07-20</lastmod>
+    <loc>https://vkdeveloper900.github.io/Portfolio/contact.html</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
+
 </urlset>
